@@ -1,0 +1,1 @@
+leia: https://carlosbonetti.github.io/jquery-loading/
