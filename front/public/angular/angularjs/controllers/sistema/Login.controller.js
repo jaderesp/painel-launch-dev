@@ -16,7 +16,8 @@ jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout',
 
             if (retorno) {
                 //redirecionar para dashboard
-                $location.path('/dashboard')
+                //$location.path('/dashboard')
+                $window.location.href = '/dashboard'
                 return;
             }
 

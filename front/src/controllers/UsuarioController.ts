@@ -129,7 +129,15 @@ class UsuarioController {
             if (!loginResult.login) {
                 return res.status(401).json({ message: 'Credenciais inválidas.' });
             }
-            return res.status(200).json(loginResult.session);
+
+            // Gravar sessão
+            if (req.session) {
+                //(req.session as any) = loginResult || {};
+            }
+
+            let { session } = loginResult;
+
+            return res.status(200).json({ session });
         } catch (error) {
             return res.status(500).json({ message: 'Erro durante o login', error });
         }

@@ -17,6 +17,9 @@ import axios from 'axios';
 import swaggerDocs from "./controllers/utils/swagger";
 import * as socketManager from "./controllers/utils/socketManager"
 import { config } from 'dotenv';
+
+//sessao
+import sessionMiddleware from './config/session';
 //inicializar banco de dados e usuario padrão
 import sequelize from './config/sequelize'; // Importa a configuração do Sequelize
 import { UsuarioService } from './services/index';      // Importa os models (Usuario, etc.)
@@ -62,6 +65,7 @@ app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
 app.use(express.json({ strict: false, limit: '100mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }));
+app.use(sessionMiddleware);
 
 //sockets
 //io.setMaxListeners(100);

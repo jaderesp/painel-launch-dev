@@ -30,7 +30,7 @@ class Utils {
                 try {
 
                     const response = await axios.post(`${rota}`, params);
-                    const retorno = response.data.retorno;
+                    const retorno = response.data;
 
                     console.log(`\r\n requisção post realizada.`, retorno);
                     resolve(retorno);
