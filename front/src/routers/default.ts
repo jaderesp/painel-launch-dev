@@ -18,3 +18,15 @@ export const login = async (req: Request, res: Response) => {
     return res.render('login/index', { BASE_URL, PORT });
 
 }
+
+export const verifySession = async (req: Request, res: Response) => {
+
+    let userLogged = (Object.keys(req.session || {}).length > 0) ? true : false;
+
+    if (userLogged) {
+        return res.json({ loggedIn: true, session: userLogged });
+    } else {
+        return res.json({ loggedIn: false });
+    }
+
+};
