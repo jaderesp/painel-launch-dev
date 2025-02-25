@@ -1,4 +1,4 @@
-jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout', '$interval', '$location', '$ngConfirm', 'DTOptionsBuilder', 'DTColumnBuilder', 'DTColumnDefBuilder', 'Utils', 'Popup', async function ($scope, $window, $http, $timeout, $interval, $location, $ngConfirm, DTOptionsBuilder, DTColumnBuilder, DTColumnDefBuilder, Utils, Popup) {
+jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout', '$interval', '$location', '$ngConfirm', 'Utils', 'Popup', async function ($scope, $window, $http, $timeout, $interval, $location, $ngConfirm, Utils, Popup) {
 
     $scope.base_url = $("#baseUrl").val();
     $scope.api_url = $("#apiUrl").val();
@@ -18,7 +18,7 @@ jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout',
             if (retorno) {
                 //redirecionar para dashboard
                 //$location.path('/dashboard')
-                $window.location.href = '/dashboard'
+                $window.location.href = '/reseller/dashboard'
                 return;
             } else {
 
@@ -51,6 +51,14 @@ jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout',
         } else {
             return true
         }
+
+    }
+
+    $scope.loggoff = async () => {
+
+        let logged = await $scope.http.post(`${$scope.base}/reseller/loggoff`)
+        console.log(logged)
+
 
     }
 

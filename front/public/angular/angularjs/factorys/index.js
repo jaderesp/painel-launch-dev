@@ -9,3 +9,9 @@ jms_app.factory('Popup', [function () {
     return new Popup();
 
 }]);
+
+jms_app.factory('Dtables', [function () {
+
+    return new Dtables();
+
+}]);

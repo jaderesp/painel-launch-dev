@@ -132,7 +132,7 @@ class UsuarioController {
 
             // Gravar sessão
             if (req.session) {
-                //(req.session as any) = loginResult || {};
+                (req.session as any).user = loginResult || undefined;
             }
 
             let { session } = loginResult;

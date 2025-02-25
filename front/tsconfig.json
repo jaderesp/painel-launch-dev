@@ -118,5 +118,5 @@
   },
   "include": [
     "src/**/*"
-  ]
+, "public/angular/angularjs/controllers/sistema/Login.controller.js"  ]
 }

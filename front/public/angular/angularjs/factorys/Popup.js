@@ -9,7 +9,7 @@ class Popup {
     }
 
     /* add item no banco e retornar format html com id do banco nas funções */
-    async confirm(titulo, msg, btnTitle, cor, redir) {
+    async confirm(titulo, msg, btnTitle, cor) {
 
         return new Promise(async (resolve, reject) => {
 
@@ -24,23 +24,13 @@ class Popup {
                         text: btnTitle,
                         btnClass: 'btn-green',
                         action: function () {
-                            if (redir) {
-                                $window.location.href = $scope.base_url + redir;
-                                return;
-                            } else {
-                                resolve(true)
-                            }
+                            resolve(true)
                         }
                     },
                     Fechar: {
                         text: 'Fechar',
                         action: function (scope, button) {
-                            if (redir) {
-                                $window.location.href = "../../" + redir;
-                                return;
-                            } else {
-                                resolve(false)
-                            }
+                            resolve(false)
                         }
                     }
                 }

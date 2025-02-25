@@ -273,3 +273,15 @@ jms_app.directive('customChange', function () {
         }
     };
 });
+
+jms_app.directive('initDataTable', ['$timeout', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            // Aguarda o Angular renderizar a tabela e depois inicializa o DataTable
+            $timeout(function () {
+                $(element).DataTable();
+            }, 0);
+        }
+    };
+}]);
