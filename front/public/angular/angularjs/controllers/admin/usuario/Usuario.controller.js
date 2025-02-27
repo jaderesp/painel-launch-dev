@@ -41,7 +41,7 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
                 $("#frm_setup").modal('show')
                 break;
             case 'upsert':
-                await $scope.http.post($scope.frmUsuario, `${$scope.base_url}/usuarios/setup`, $scope.token)
+                await $scope.http.post($scope.frmUsuario, `${$scope.base_url}/usuario/setup`, $scope.token)
                 await $scope.list()
                 $("#frm_setup").modal('hide')
                 break;
@@ -54,6 +54,33 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
         }
 
         console.log(item)
+    }
+
+    $scope.verifyExist = async (indice_, elamentId) => {
+
+        let value = $(`#${indice_}`).val()
+        let filter_ = { [indice_]: value }
+
+        $(`#${elamentId}`).html('')
+        const response = await $scope.http.post(filter_, `${$scope.base_url}/usuario/verifyExist`, $scope.token)
+
+        if (response?.exist) {
+
+            $(`#${elamentId}`).html(`*${indice_} já existe.`)
+            $(`#${elamentId}`).addClass('text-danger')
+
+            //apagar mensagem apos 3 segundos
+            setTimeout(() => {
+                $(`#${elamentId}`).html('')
+                $(`#${elamentId}`).removeClass('text-danger')
+                $scope.frmUsuario[indice_] = ''
+            }, 3000)
+
+        } else {
+            $(`#${elamentId}`).html('')
+            $(`#${elamentId}`).removeClass('text-danger')
+        }
+
     }
 
 

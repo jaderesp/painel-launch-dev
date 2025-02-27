@@ -20,12 +20,18 @@ class UsuarioController {
         try {
             const { id_usr, email, telefone } = req.body;
             const params = req.body;
-            let where;;
+            let where;
+            params.owner_id = '0000000001'
 
             if (id_usr) {
                 where = { id_usr };  //editar usuario existente
+
+                if (params.password) {
+                    delete params.password
+                }
+
             } else {
-                where = { email, telefone, id_usr }
+                where = { email, telefone }
             }
 
             if (!email) {
@@ -56,7 +62,7 @@ class UsuarioController {
             const where = req.body;
             const usuario = await UsuarioService.getSomeOne(where);
             if (usuario) {
-                return res.status(404).json({ exist: true, message: 'Já existe um usuário com esse email ou telefone.' });
+                return res.status(200).json({ exist: true, message: 'Já existe um usuário com esse email ou telefone.' });
             }
 
 
