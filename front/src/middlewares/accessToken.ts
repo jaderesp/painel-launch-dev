@@ -1,23 +1,19 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from "express";
+import { AuthService } from "../services/authService";
 
-const SECRET_KEY = process.env.JWT_SECRET || 'minha_chave_secreta';
+export function authenticateToken(req: Request, res: Response, next: NextFunction) {
+    const token = req.header("Authorization")?.split(" ")[1]; // Bearer Token
 
-// Middleware para verificar o token JWT
-export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-    const { token } = req.body;
-
-    if (token) {
-        try {
-            const decoded = jwt.verify(token.toString(), SECRET_KEY);
-            Object.assign(req, { user: decoded }) // Adiciona os dados do token à requisição para uso futuro
-            next();
-        } catch (error) {
-            return res.status(401).json({ message: 'Token inválido ou expirado.', valid: false });
-        }
-
-    } else if (!token) {
-        return res.status(403).json({ message: 'Token não fornecido.', valid: false });
+    if (!token) {
+        return res.status(401).json({ error: "Acesso negado, token não fornecido." });
     }
 
-};
+    const decoded = AuthService.verifyToken(token);
+
+    if (!decoded) {
+        return res.status(403).json({ error: "Token inválido ou expirado." });
+    }
+
+    (req as any).userId = decoded.userId;
+    next();
+}

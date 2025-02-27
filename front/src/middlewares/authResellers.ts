@@ -5,7 +5,7 @@ export const verificarSessao = (req: Request, res: Response, next: NextFunction)
 
     if (!userLogged) {
         //return res.status(401).json({ message: 'Não autorizado' });
-        return res.redirect('/admin');
+        return res.redirect('/');
     }
 
     next();

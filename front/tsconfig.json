@@ -117,6 +117,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src/**/*"
-, "public/angular/angularjs/controllers/sistema/Login.controller.js"  ]
+    "src/**/*",
+    "public/angular/angularjs/controllers/admin/Login.controller.js"
+  ]
 }

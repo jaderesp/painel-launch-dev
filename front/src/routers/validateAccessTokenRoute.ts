@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
-import { verifyToken } from '../middlewares/accessToken';
+import { authenticateToken } from '../middlewares/accessToken';
 
 const router = Router();
 
 // Rota para verificar a validade do token
-router.post('/validate-token', verifyToken, (req: Request, res: Response) => {
+router.post('/validate-token', authenticateToken, (req: Request, res: Response) => {
 
     if ("user" in req) {
 

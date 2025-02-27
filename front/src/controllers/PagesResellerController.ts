@@ -7,8 +7,8 @@ const { BASE_URL, PORT } = process.env;
 
 export const categorias = async (req: Request, res: Response) => {
 
-    console.log("teste")
-    return res.render('reseller/categorias/index');
+    let session = req.session;
+    return res.render('reseller/categorias/index', { BASE_URL, session });
 
 }
 

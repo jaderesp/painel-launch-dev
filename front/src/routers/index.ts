@@ -9,15 +9,20 @@ import PagesReseller from './pagesReseller';
 
 const router = Router();
 
-//paginas
+//admin pages
 router.use(PagesAdmin);
+
+//reseller pages
 router.use(PagesReseller);
 
-//api
+//api admin
 router.use(usuarioRoutes); // Indexa as rotas de usuário
 router.use(contaRoutes);    // Indexa as rotas de conta
 router.use(configuracoesRoute);
 router.use(validateAccessToken)
+
+//api reseller
+
 
 export default router;
 

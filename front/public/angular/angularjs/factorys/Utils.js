@@ -12,14 +12,24 @@ class Utils {
     }
 
     /* add item no banco e retornar format html com id do banco nas funções */
-    async post(params, rota) {
+    async post(params, rota, token = null) {
 
         return new Promise(async (resolve, reject) => {
+
+            let header = null
 
             if (!rota) {
                 console.log("\r\n Informar a rota para chamada: ");
                 resolve(false)
                 return;
+            }
+
+            if (token) {
+                header = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
             }
 
             if (params) {
@@ -29,7 +39,7 @@ class Utils {
 
                 try {
 
-                    const response = await axios.post(`${rota}`, params);
+                    const response = await axios.post(`${rota}`, params, header);
                     const retorno = response.data;
 
                     console.log(`\r\n requisção post realizada.`, retorno);

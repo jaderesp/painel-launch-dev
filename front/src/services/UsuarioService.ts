@@ -3,6 +3,7 @@ import sequelize from '../config/sequelize'; // Configuração do banco de dados
 import * as bcrypt from 'bcrypt';
 import { Int32 } from 'typeorm';
 import { IUserResponse } from '../interfaces/IUserResponse';
+import { AuthService } from "./authService";
 
 
 class UsuarioService {
@@ -129,7 +130,7 @@ class UsuarioService {
                 return { login: false };
             }
 
-            const { password } = usuario;
+            const { id_usr, password } = usuario;
             let resultado = {}
             Object.assign(resultado, usuario.toJSON())
 
@@ -137,9 +138,12 @@ class UsuarioService {
                 return { login: false };
             }
 
+            //gera token de autenticação
+            const token = AuthService.generateToken(id_usr.toString());
+
             // Supondo que haja uma conta associada ao usuário
             //const account = await AccountService.getAccountByOwnerId(UsuarioModel.id);
-            return { login: true, session: { ...resultado } };
+            return { login: true, token, session: { ...resultado } };
         } catch (error) {
             console.log("Erro durante o login: ", error);
             return { login: false };
