@@ -256,6 +256,19 @@ jms_app.directive('fileInput', ['$parse', function ($parse) {
     };
 }]);
 
+jms_app.directive("ngFileSelect", function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var onChangeHandler = scope.$eval(attrs.customOnChange);
+            element.on('change', onChangeHandler);
+            element.on('$destroy', function () {
+                element.off();
+            });
+
+        }
+    };
+});
 
 jms_app.directive('customChange', function () {
     return {

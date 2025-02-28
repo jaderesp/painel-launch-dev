@@ -5,7 +5,7 @@ class FileSetup {
     }
 
     /* add item no banco e retornar format html com id do banco nas funções */
-    async upload(file, route, token) {
+    async upload(file, inputsData, route, token) {
 
         return new Promise((resolve, reject) => {
 
@@ -37,6 +37,16 @@ class FileSetup {
 
             const formData = new FormData();
             formData.append('file', file);
+
+            //adicionar indicer ao FormData dinamicamente
+            for (const chave in inputsData) {
+
+                if (inputsData.hasOwnProperty(chave)) {
+                    console.log(`Índice: ${chave} | Valor: ${inputsData[chave]}`);
+                    formData.append(`${chave}`, inputsData[chave]);
+                }
+
+            }
 
             axios.post(route, formData, header)
                 .then(response => {

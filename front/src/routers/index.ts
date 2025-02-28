@@ -5,6 +5,7 @@ import configuracoesRoute from './configuracoesRoute';
 import validateAccessToken from "./validateAccessTokenRoute"
 import PagesAdmin from './pagesAdmin';
 import PagesReseller from './pagesReseller';
+import CategoriasRoute from './categoriasRoute';
 
 
 const router = Router();
@@ -16,6 +17,7 @@ router.use(PagesAdmin);
 router.use(PagesReseller);
 
 //api admin
+router.use(CategoriasRoute);
 router.use(usuarioRoutes); // Indexa as rotas de usuário
 router.use(contaRoutes);    // Indexa as rotas de conta
 router.use(configuracoesRoute);

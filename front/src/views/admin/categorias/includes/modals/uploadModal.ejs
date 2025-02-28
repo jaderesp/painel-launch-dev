@@ -1,0 +1,35 @@
+<!-- Modal-->
+<div class="modal fade" id="uploadModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-body social-profile text-start">
+                <div class="modal-toggle-wrapper">
+                    <h3>Arquivo de banner da Categoria</h3>
+                    <p>Gerenciar banners da categoria.</p>
+
+                    <form ng-submit="acao('upsert',null)" class="row g-3">
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="file">Arquivo do banner</label>
+                            <input class="form-control" onchange="angular.element(this).scope().uploadView(this)"
+                                id="file" type="file" placeholder="Selecione uma imagem">
+                        </div>
+
+                        <div class="col-12" ng-show="filePreview">
+                            <label class="form-label" for="inputNome">Pré-visualizar Banner</label>
+                            <!-- tag img previsualizar arquivo imagem-->
+                            <img class="container thumbnail" ng-src="{{filePreview}}" alt="imagem">
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn btn-warning" ng-click="filePreview=null" type="button">Limpar</button>
+                            <button class="btn btn-success" type="submit">Salvar </button>
+                            <button class="btn btn-info" type="button" data-bs-dismiss="modal">Fechar </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

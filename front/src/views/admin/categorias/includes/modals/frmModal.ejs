@@ -5,64 +5,21 @@
         <div class="modal-content ">
             <div class="modal-body social-profile text-start">
                 <div class="modal-toggle-wrapper">
-                    <h3>Dados do Usuário</h3>
-                    <p>cadastro de usuários por tipo.</p>
+                    <h3>Dados da Categoria</h3>
+                    <p>cadastro de categorias de games.</p>
 
                     <form ng-submit="acao('upsert',null)" class="row g-3">
 
                         <div class="col-md-12">
-                            <label class="form-label" for="inputTypeUser">Tipo</label>
-
-                            <select ng-model="frmUsuario.type_usuario" class="form-select" id="inputTypeUser"
-                                ng-options="opcao.value as opcao.title for opcao in opcoes track by opcao.title"
-                                required>
-                                <option selected="">Seleciona o Tipo de Usuário</option>
-                            </select>
-                        </div>
-                        <div class="col-md-8">
-                            <label class="form-label" for="inputNome">Nome</label>
-                            <input ng-model="frmUsuario.nome" class="form-control" id="inputNome" type="text"
-                                placeholder="Informe o nome" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label" for="telefone">Telefone</label>
-                            <span id="msg_telefone"></span>
-                            <input ng-model="frmUsuario.telefone" ng-blur="verifyExist('telefone','msg_telefone')"
-                                class="form-control" id="telefone" type="text" placeholder="Informe o Email" required>
+                            <label class="form-label" for="inputNome">Título</label>
+                            <input ng-model="frmCategoria.titulo" class="form-control" id="inputNome" type="text"
+                                placeholder="Informe um título" required>
                         </div>
                         <div class="col-md-12">
-                            <label class="form-label" for="email">Email</label>
-                            <span id="msg_email"></span>
-                            <input ng-model="frmUsuario.email" ng-blur="verifyExist('email','msg_email')"
-                                class="form-control" id="email" type="email" placeholder="Informe o Email" required>
+                            <label class="form-label" for="descricao">Descrição</label>
+                            <textarea ng-model="frmCategoria.descricao" class="form-control" id="descricao"
+                                placeholder="Digite aqui uma descrição..."></textarea>
                         </div>
-
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input ng-model="genSenha" ng-checked="!frmUsuario.id_usr" ng-true-value="true"
-                                    ng-false-value="false" class="form-check-input" id="genSenha" type="checkbox">
-                                <label class="form-check-label d-block mb-0" for="genSenha">Criar
-                                    Senha</label>
-                            </div>
-                        </div>
-                        <!-- confirmar senha -->
-                        <div class="row" ng-show="genSenha || !frmUsuario.id_usr">
-
-                            <div class=" col-md-6">
-                                <label class="form-label" for="inputPassword4">Senha</label>
-
-                                <input ng-model="frmUsuario.password" class="form-control" id="inputPassword4"
-                                    type="password" placeholder="Digite a senha" required>
-                            </div>
-                            <div class="col-md-6" >
-                                <label class="form-label" for="inputConfirm">Confirmar Senha</label>
-                                <span class="label text-danger" ng-show="frmUsuario.password !== confirmPass">*Senhas
-                                    não coencidem.</span>
-                                <input ng-model="confirmPass" class="form-control" id="inputConfirm" type="password"
-                                    placeholder="Confirmar senha" required>
-                            </div>
-                        </div>
-
 
                         <!--<div class="col-12">
                             <div class="form-check">

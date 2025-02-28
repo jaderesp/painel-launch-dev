@@ -4,7 +4,7 @@
     <div class="page-title">
       <div class="row">
         <div class="col-6">
-          <h4>Lista de Usuários</h4>
+          <h4>Categorias de Games</h4>
         </div>
         <div class="col-6">
           <ol class="breadcrumb">
@@ -45,18 +45,20 @@
                 <thead>
                   <tr>
                     <th>id</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Tipo</th>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Banner</th>
                     <th>Ação</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="item in usuariosList">
-                    <td>{{item.id_usr}}</td>
-                    <td>{{item.nome}}</td>
-                    <td>{{item.email}}</td>
-                    <td>{{item.type_usuario}}</td>
+                  <tr ng-repeat="item in categoriasList">
+                    <td>{{item.id_cat}}</td>
+                    <td>{{item.titulo}}</td>
+                    <td>{{item.descricao}}</td>
+                    <td>
+                      <button class="btn btn-info btn-sm" ng-click="acao('upload',null)">Ver</button>
+                    </td>
                     <td>
                       <button class="btn btn-success btn-sm" ng-click="acao('edit',item)">Editar</button>
                       <button class="btn btn-danger btn-sm" ng-click="acao('delete',item)">Remover</button>
@@ -331,3 +333,4 @@
   <!-- Container-fluid Ends-->
   <!-- modals -->
   <%- include('includes/modals/frmModal') %>
+    <%- include('includes/modals/uploadModal') %>
