@@ -15,3 +15,9 @@ jms_app.factory('Dtables', [function () {
     return new Dtables();
 
 }]);
+
+jms_app.factory('FileSetup', [function () {
+
+    return new FileSetup();
+
+}]);

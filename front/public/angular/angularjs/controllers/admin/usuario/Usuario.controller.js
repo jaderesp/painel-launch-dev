@@ -36,6 +36,7 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
                 $("#frm_setup").modal('show')
                 break;
             case 'edit':
+                delete item.password
                 angular.extend($scope.frmUsuario, item)
                 //abrir modal com os dados (form)
                 $("#frm_setup").modal('show')
@@ -46,8 +47,12 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
                 $("#frm_setup").modal('hide')
                 break;
             case 'delete':
-                await $scope.http.post(item, `${$scope.base_url}/usuarios/remove`, $scope.token)
-                await $scope.list()
+                let confirm = await Popup.confirm('Atenção!', 'Deseja realmente excluir este usuário e todos os dados relacionados ao mesmo?', 'Confirmar', 'red');
+                if (confirm) {
+                    await $scope.http.post(item, `${$scope.base_url}/usuarios/remove`, $scope.token)
+                    await $scope.list()
+                }
+
                 break;
             default:
                 break;

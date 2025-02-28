@@ -1,5 +1,7 @@
 </div> <!-- segundo controller-->
 </div> <!-- primeiro controller-->
+<input type="hidden" name="baseUrl" id="baseUrl" value="<%- BASE_URL %>">
+<input type="hidden" name="token" id="token" value="<%- session.user.token %>">
 
 <!-- footer start-->
 <footer class="footer">
@@ -50,10 +52,11 @@
 
 <%- include('../../comum/angularjs'); -%>
 
-    <script src="<%- BASE_URL %>/angular/angularjs/controllers/admin/Dashboard.controller.js"></script>
+    <script src="<%- BASE_URL %>/angular/angularjs/controllers/admin/categorias/Categorias.controller.js"></script>
     <!-- <script src="/js/app/services/Dashboard.factory.js"></script> -->
     <script src="<%- BASE_URL %>/angular/angularjs/factorys/Utils.js"></script>
     <script src="<%- BASE_URL %>/angular/angularjs/factorys/Popup.js"></script>
+    <script src="<%- BASE_URL %>/angular/angularjs/factorys/FileSetup.js"></script>
     <script src="<%- BASE_URL %>/angular/angularjs/factorys/Dtables.js"></script>
     <script src="<%- BASE_URL %>/angular/angularjs/factorys/index.js"></script>
 

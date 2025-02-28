@@ -8,9 +8,7 @@ const { BASE_URL, PORT } = process.env;
 export const categorias = async (req: Request, res: Response) => {
 
     let session = req.session;
-    if (!("user" in session)) {
-        return res.redirect('/admin');
-    }
+
     return res.render('admin/categorias/index', { BASE_URL, session });
 
 }

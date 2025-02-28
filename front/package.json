@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/app.ts",
-    "build": "rm -rf ./js/ && tsc"
+    "build": "rm -rf ./js/ && tsc",
+    "angular:controller": "node angularjs-cli/angular-controller.js"
   },
   "author": "clear",
   "license": "ISC",
