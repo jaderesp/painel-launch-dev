@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
 import CategoriasService from '../services/CategoriasService';
+import formidable, { IncomingForm } from "formidable";
+import path from "path";
+import fs from "fs-extra";
 
 class CategoriasController {
     // Criar uma nova conta
@@ -123,6 +126,63 @@ class CategoriasController {
         await CategoriasService.update({ 'imagemDir': fileDir }, { id_cat: id });
 
         res.json({ message: 'Upload realizado com sucesso!', file: req.file });
+    }
+
+    public async uploadXhr(req: Request, res: Response) {
+
+
+        let fileMaxSize = 3000 * 1024;  /* 3ooMB de limite no arquivo */
+        const form = new IncomingForm({
+            // uploadDir: path.join(__dirname, "../../uploads"), // Diretório temporário
+            keepExtensions: true,
+            multiples: false, // Define se permite múltiplos arquivos
+            maxFileSize: fileMaxSize, // Define o tamanho máximo do arquivo
+        });
+
+        form.parse(req, async (err, fields, files) => {
+
+            if (err) {
+                console.error("Erro ao processar upload:", err);
+                return res.status(500).json({ message: "Erro ao processar o upload." });
+            }
+
+            // Capturar os campos enviados no FormData
+            const id = fields.id ? String(fields.id) : null;
+            const dir = fields.dir ? String(fields.dir) : "uploads";
+            const subdir = fields.subdir ? String(fields.subdir) : "";
+
+            if (!id) {
+                return res.status(400).json({ message: "ID do cadastro é obrigatório." });
+            }
+
+            // Criar diretório baseado no ID do usuário/cadastro
+            const uploadPath = path.join(__dirname, "../../public/uploads", dir, subdir);
+            await fs.ensureDir(uploadPath);
+
+            // Processar o arquivo enviado
+            const file = Array.isArray(files.file) ? files.file[0] : files.file;
+            if (!file) {
+                return res.status(400).json({ message: "Nenhum arquivo enviado." });
+            }
+
+            //retornar valor file[0].newFilename
+            const newFilePath = path.join(uploadPath, file.newFilename);
+            await fs.move(file.filepath, newFilePath); // Move o arquivo do temp para o diretório correto
+
+            let dirFile = `/uploads/${dir}/${subdir}/${file.newFilename}`
+            //atualizar diretorio do arquivo no banco referenciando o id
+            await CategoriasService.update({ 'imagemDir': dirFile }, { id_cat: id });
+
+            res.json({
+                message: "Upload realizado com sucesso!",
+                filePath: `/uploads/${dir}/${subdir}/${file.newFilename}`,
+                id,
+                dir,
+                subdir
+            });
+
+
+        });
     }
 
 }

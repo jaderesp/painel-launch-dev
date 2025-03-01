@@ -42,6 +42,10 @@ class FileSetup {
             Object.keys(inputsData).forEach(key => {
                 const value = inputsData[key]; // Obtém o valor correspondente à chave
                 console.log(`Adicionando ao FormData -> Índice: ${key} | Valor: ${value}`);
+                if (value['id']) {
+                    formData.append('id', value['id']); // Usa key como nome do índice e value como valor
+                }
+
                 if (value['dir']) {
                     formData.append('dir', value['dir']); // Usa key como nome do índice e value como valor
                 }
@@ -65,4 +69,74 @@ class FileSetup {
                 });
         });
     }
+
+    async uploadXhr(file, inputsData, route, token) {
+        return new Promise(async (resolve, reject) => {
+            try {
+
+                let xhr = new XMLHttpRequest();
+                let formData = new FormData();
+
+                if (!file) {
+                    console.error("Nenhum arquivo selecionado!");
+                    resolve(false);
+                    return;
+                }
+
+                formData.append('file', file);
+
+                // Adicionar outros parâmetros ao FormData
+                Object.keys(inputsData).forEach(key => {
+                    const value = inputsData[key];
+                    console.log(`Adicionando ao FormData -> Índice: ${key} | Valor: ${value}`);
+
+                    if (value['dir']) {
+                        formData.append('dir', value['dir']);
+                    }
+                    if (value['subdir']) {
+                        formData.append('subdir', value['subdir']);
+                    }
+                });
+
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        console.log(`📌 Status da Requisição: ${xhr.status}`);
+                    }
+                };
+
+                xhr.timeout = 5000;
+                xhr.open("POST", route, true);
+
+                // ✅ Adicionar o Token Bearer corretamente no cabeçalho
+                xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+
+                /* Tratar retorno */
+                xhr.responseType = 'json'; // Melhor usar JSON para resposta
+
+                xhr.onload = async function () {
+                    if (xhr.readyState === xhr.DONE) {
+                        if (xhr.status === 200) {
+                            console.log("📌 Resposta da API:", xhr.response);
+                            resolve(xhr.response);
+                        } else {
+                            console.error("❌ Erro no upload:", xhr.status, xhr.statusText);
+                            resolve(false);
+                        }
+                    }
+                };
+
+                xhr.onerror = function () {
+                    console.error("❌ Erro de rede durante o upload.");
+                    resolve(false);
+                };
+
+                xhr.send(formData);
+            } catch (error) {
+                console.error("❌ Erro inesperado no upload:", error);
+                resolve(false);
+            }
+        });
+    }
+
+
 }

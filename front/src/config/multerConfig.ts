@@ -2,9 +2,6 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs-extra';
 
-// Middleware para processar FormData antes do Multer
-export const processFormData = multer().none(); // Nenhum arquivo é processado aqui, apenas os campos do `FormData`
-
 // Configuração do armazenamento do Multer
 const storage = multer.diskStorage({
     destination: async (req, file, cb) => {

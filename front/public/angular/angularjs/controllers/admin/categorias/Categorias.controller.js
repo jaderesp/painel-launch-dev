@@ -57,15 +57,18 @@ angular.module('jms_app')
         case 'upload':
           let { id_cat } = $scope.selectedItem
           let file = document.getElementById('file').files[0]
+          //ativar loader
+
           //exibir modal de upload (informar a pasta e id para gerar subpasta no diretorio de destino do arquivo)
-          await $scope.fileSetup.upload(file, [{ dir: 'categorias', subdir: `${id_cat}` }], `${$scope.base_url}/categorias/upload`, $scope.token)
+          let res = await $scope.fileSetup.upload(file, [{ id: id_cat, dir: 'categorias', subdir: `${id_cat}` }], `${$scope.base_url}/categorias/uploadXhr`, $scope.token)
           await $scope.list()
+          //desatviar loader
           break;
         case 'uploaded':
 
           let exist = (item.imagemDir) ? true : false
           if (exist) {
-            $scope.filePreview = item.imagemDir
+            $scope.filePreview = `${$scope.base_url}${item.imagemDir}`
           }
           //exibir modal de upload
           $("#uploadModal").modal('show')
