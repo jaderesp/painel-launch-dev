@@ -117,6 +117,11 @@ class CategoriasController {
             return res.status(200).json({ message: 'Nenhum arquivo enviado.' });
         }
 
+        let { id, fileDir } = req.body;
+
+        //atualizar diretorio do arquivo no banco referenciando o id
+        await CategoriasService.update({ 'imagemDir': fileDir }, { id_cat: id });
+
         res.json({ message: 'Upload realizado com sucesso!', file: req.file });
     }
 

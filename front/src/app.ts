@@ -53,6 +53,10 @@ app.use(
    })
 );
 
+// 🔹 Permite que Express processe FormData corretamente
+app.use(express.json({ strict: false, limit: '100mb' }));
+app.use(express.urlencoded({ extended: true }));
+
 //add pasta public para uploads e acesso a arquivos
 app.use(express.static(path.join(__dirname, '/public')));
 
@@ -62,8 +66,6 @@ app.set('view engine', 'ejs');
 // Serve arquivos estáticos da aplicação
 app.use(express.static('public'));
 app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
-app.use(express.json({ strict: false, limit: '100mb' }));
-app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: '*' }));
 app.use(sessionMiddleware);
 

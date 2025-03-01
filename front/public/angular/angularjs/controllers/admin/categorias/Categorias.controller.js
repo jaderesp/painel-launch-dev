@@ -8,11 +8,13 @@ angular.module('jms_app')
     $scope.base = $scope.base_url
     $scope.Popup = Popup.modal = $ngConfirm
     $scope.http = Utils
+    $scope.fileSetup = FileSetup
 
     $scope.frmCategoria = {}
     $scope.categoriasList = []
 
     $scope.filePreview = null
+    $scope.selectedItem = {}
 
     $scope.list = async () => {
 
@@ -23,6 +25,8 @@ angular.module('jms_app')
     }
 
     $scope.acao = async (action, item) => {
+
+      angular.extend($scope.selectedItem, item)
 
       //swicth
       switch (action) {
@@ -51,6 +55,18 @@ angular.module('jms_app')
 
           break;
         case 'upload':
+          let { id_cat } = $scope.selectedItem
+          let file = document.getElementById('file').files[0]
+          //exibir modal de upload (informar a pasta e id para gerar subpasta no diretorio de destino do arquivo)
+          await $scope.fileSetup.upload(file, [{ dir: 'categorias', subdir: `${id_cat}` }], `${$scope.base_url}/categorias/upload`, $scope.token)
+          await $scope.list()
+          break;
+        case 'uploaded':
+
+          let exist = (item.imagemDir) ? true : false
+          if (exist) {
+            $scope.filePreview = item.imagemDir
+          }
           //exibir modal de upload
           $("#uploadModal").modal('show')
           break;
@@ -72,6 +88,7 @@ angular.module('jms_app')
         $scope.filePreview = e.target.result
 
       }
+
 
     }
 

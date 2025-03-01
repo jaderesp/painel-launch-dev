@@ -20,16 +20,16 @@ class FileSetup {
                 }
             }
 
-            if (!rota) {
+            if (!route) {
                 console.log("\r\n Informar a rota para chamada: ");
                 resolve(false)
                 return;
             }
 
             if (token) {
+                header = undefined
                 header = {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${token}`
                     }
                 }
@@ -38,17 +38,24 @@ class FileSetup {
             const formData = new FormData();
             formData.append('file', file);
 
-            //adicionar indicer ao FormData dinamicamente
-            for (const chave in inputsData) {
-
-                if (inputsData.hasOwnProperty(chave)) {
-                    console.log(`Índice: ${chave} | Valor: ${inputsData[chave]}`);
-                    formData.append(`${chave}`, inputsData[chave]);
+            // Adicionar os dados extras ao FormData com os nomes corretos das chaves e valores
+            Object.keys(inputsData).forEach(key => {
+                const value = inputsData[key]; // Obtém o valor correspondente à chave
+                console.log(`Adicionando ao FormData -> Índice: ${key} | Valor: ${value}`);
+                if (value['dir']) {
+                    formData.append('dir', value['dir']); // Usa key como nome do índice e value como valor
                 }
 
-            }
+                if (value['subdir']) {
+                    formData.append('subdir', value['subdir']); // Usa key como nome do índice e value como valor
+                }
+            });
 
-            axios.post(route, formData, header)
+            axios.post(route, formData, header, {
+                onUploadProgress: progressEvent => {
+                    console.log('upload progress: ' + Math.round((progressEvent.loaded / progressEvent.total) * 100) + '%')
+                }
+            })
                 .then(response => {
                     resolve(response.data)
                 })
