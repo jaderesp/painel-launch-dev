@@ -5,6 +5,14 @@ dotenv.config();
 const { BASE_URL, PORT } = process.env;
 
 
+export const home = async (req: Request, res: Response) => {
+
+    let session = req.session;
+
+    return res.render('admin/home/index', { BASE_URL, session });
+
+}
+
 export const categorias = async (req: Request, res: Response) => {
 
     let session = req.session;
@@ -13,11 +21,11 @@ export const categorias = async (req: Request, res: Response) => {
 
 }
 
-export const home = async (req: Request, res: Response) => {
+export const games = async (req: Request, res: Response) => {
 
     let session = req.session;
 
-    return res.render('admin/home/index', { BASE_URL, session });
+    return res.render('admin/games/index', { BASE_URL, session });
 
 }
 

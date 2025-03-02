@@ -3,6 +3,8 @@ import { UsuarioModel } from "./UsuarioModel"
 import ContaModel from "./ContaModel"
 import { ConfiguracoesModel } from "./ConfiguracoesModel"
 import { CategoriasModel } from "./CategoriasModel"
+import { GamesModel } from "./GamesModel"
+
 
 const initializeModels = async (sequelize: Sequelize) => {
     await sequelize.sync(); //criar as tabelas caso nao existam
@@ -10,7 +12,8 @@ const initializeModels = async (sequelize: Sequelize) => {
         UsuarioModel,
         ContaModel,
         ConfiguracoesModel,
-        CategoriasModel
+        CategoriasModel,
+        GamesModel
     ]); // Adicionar as models ao Sequelize
 };
 
@@ -19,6 +22,7 @@ export {
     UsuarioModel,
     ContaModel,
     ConfiguracoesModel,
-    CategoriasModel
+    CategoriasModel,
+    GamesModel
 }
 export default UsuarioModel

@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 
 // Pegando argumentos do comando (controller, factories e caminho)
@@ -53,6 +53,7 @@ const controllerTemplate = `angular.module('jms_app')
 if (!fs.existsSync(controllerPath)) {
   fs.mkdirSync(controllerPath, { recursive: true });
 }
+
 
 // Criar o arquivo do controller
 const filePath = path.join(controllerPath, `${controllerName.toLowerCase()}.controller.js`);

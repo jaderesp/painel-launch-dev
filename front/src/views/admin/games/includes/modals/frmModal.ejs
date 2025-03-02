@@ -1,0 +1,67 @@
+<!-- Modal-->
+<div class="modal fade" id="frm_setup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-body social-profile text-start">
+                <div class="modal-toggle-wrapper">
+                    <h3>Dados do Game</h3>
+                    <p>cadastro de Games de games.</p>
+
+                    <form ng-submit="acao('upsert',null)" class="row g-3">
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputNome">Título</label>
+                            <input ng-model="frmGame.titulo" class="form-control" id="inputNome" type="text"
+                                placeholder="Informe um título" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label" for="descricao">Descrição</label>
+                            <textarea ng-model="frmGame.descricao" class="form-control" id="descricao"
+                                placeholder="Digite aqui uma descrição..."></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputCategoria">Categoria</label>
+
+                            <select ng-model="frmGame.id_cat" class="form-select" id="inputCategoria"
+                                ng-options="opcao.id_cat as opcao.titulo for opcao in categoriasList track by opcao.titulo"
+                                required>
+                                <option selected="">Seleciona a Categoria</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputurlRoom">Url da Room</label>
+                            <input ng-model="frmGame.urlRoom" class="form-control" id="inputurlRoom" type="text"
+                                placeholder="Informe a url da room do jogo" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputurlStreamIcon">Url da Room</label>
+                            <input ng-model="frmGame.urlStreamIcon" class="form-control" id="inputurlStreamIcon" type="text"
+                                placeholder="Informe a url do icone do jogo" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputurlBanner">Url da Room</label>
+                            <input ng-model="frmGame.urlBanner" class="form-control" id="inputurlBanner" type="text"
+                                placeholder="Informe a url do banner do jogo" required>
+                        </div>
+
+                        <!--<div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" id="gridCheck" type="checkbox">
+                                <label class="form-check-label d-block mb-0" for="gridCheck">Check me out</label>
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                            <button class="btn btn-success" type="submit">Salvar </button>
+                            <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Fechar </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
