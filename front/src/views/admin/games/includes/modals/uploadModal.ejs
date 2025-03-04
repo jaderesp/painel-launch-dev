@@ -5,22 +5,44 @@
         <div class="modal-content ">
             <div class="modal-body social-profile text-start">
                 <div class="modal-toggle-wrapper">
-                    <h3>Arquivo de Vídeo</h3>
-                    <p>Vídeo de introdução do game.</p>
+                    <h3>Enviar Arquivo</h3>
+                    <p>Arquivo para upload no cadastro de game.</p>
 
                     <form ng-submit="acao('upload',null)" class="row g-3">
-
+                        <div class="col-12 text-center">
+                            <label class="btn btn-info" ng-show="selectFileDir"
+                                ng-bind="'Arquivo atual: ' + selectFileDir"></label>
+                        </div>
                         <div class="col-md-12">
-                            <label class="form-label" for="file">Arquivo do Vídeo</label>
+                            <label class="form-label" for="file">Arquivo</label>
                             <input class="form-control" onchange="angular.element(this).scope().uploadView(this)"
                                 id="file" type="file" placeholder="Selecione um arquivo de video (mp4, avi)">
                         </div>
 
-                        <div class="col-12" ng-show="filePreview">
-                            <label class="form-label" for="inputNome">Pré-visualizar</label>
-                            <!-- tag img previsualizar arquivo imagem-->
-                            <img class="container thumbnail" ng-src="{{filePreview}}" alt="imagem">
+                        <div ng-show="filePreview && extIsVisible">
+                            <!-- visualizar arquivos de imagem -->
+                            <div class="col-12" ng-if="extIsVisible.type === 'image'">
+                                <label class="form-label" for="inputNome">Pré-visualizar</label>
+                                <!-- tag img previsualizar arquivo imagem-->
+                                <img class="container thumbnail" ng-src="{{filePreview}}" alt="imagem">
+                            </div>
+
+                            <!-- visualizar arquivos de video -->
+                            <div class="col-12" ng-if="extIsVisible.type === 'video'">
+                                <label class="form-label" for="inputNome">Pré-visualizar</label>
+                                <!-- tag video previsualizar arquivo video-->
+                                <video class="container thumbnail" ng-src="{{filePreview}}" controls></video>
+                            </div>
+
+                            <!-- visualizar arquivos de audio -->
+                            <div class="col-12" ng-if="extIsVisible.type === 'audio'">
+                                <label class="form-label" for="inputNome">Pré-visualizar</label>
+                                <!-- tag audio previsualizar arquivo audio-->
+                                <audio class="container thumbnail" ng-src="{{filePreview}}" controls></audio>
+                            </div>
+
                         </div>
+
 
                         <div class="col-12">
                             <button class="btn btn-warning" ng-click="filePreview=null" type="button">Limpar</button>

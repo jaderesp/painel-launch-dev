@@ -47,7 +47,10 @@
                     <th>id</th>
                     <th>Título</th>
                     <th>Descrição</th>
-                    <th>Vídeo Intro</th>
+                    <th>Room</th>
+                    <th>Intro</th>
+                    <th>Icon</th>
+                    <th>Banner</th>
                     <th>Ação</th>
                   </tr>
                 </thead>
@@ -57,7 +60,17 @@
                     <td>{{item.titulo}}</td>
                     <td>{{item.descricao}}</td>
                     <td>
-                      <button class="btn btn-info btn-sm" ng-click="acao('uploaded',item)">Ver</button>
+                      <button class="btn btn-primary btn-sm" ng-click="acao('uploaded',item, 'urlRoom')">Ver</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-info btn-sm" ng-click="acao('uploaded',item,'videoIntoDir')">Ver</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-danger btn-sm"
+                        ng-click="acao('uploaded',item,'urlStreamIcon')">Ver</button>
+                    </td>
+                    <td>
+                      <button class="btn btn-success btn-sm" ng-click="acao('uploaded',item,'urlBanner')">Ver</button>
                     </td>
                     <td>
                       <button class="btn btn-success btn-sm" ng-click="acao('edit',item)">Editar</button>

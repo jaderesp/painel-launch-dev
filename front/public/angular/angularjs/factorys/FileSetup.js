@@ -53,6 +53,10 @@ class FileSetup {
                 if (value['subdir']) {
                     formData.append('subdir', value['subdir']); // Usa key como nome do índice e value como valor
                 }
+
+                if (value['fieldtable']) {
+                    formData.append('fieldtable', value['fieldtable']); // Usa key como nome do índice e value como valor
+                }
             });
 
             axios.post(route, formData, header, {
@@ -95,6 +99,10 @@ class FileSetup {
                     }
                     if (value['subdir']) {
                         formData.append('subdir', value['subdir']);
+                    }
+
+                    if (value['fieldtable']) {
+                        formData.append('fieldtable', value['fieldtable']); // Usa key como nome do índice e value como valor
                     }
                 });
 

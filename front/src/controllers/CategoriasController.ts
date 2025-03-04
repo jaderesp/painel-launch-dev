@@ -27,6 +27,8 @@ class CategoriasController {
 
             if (id_cat) {
                 where = { id_cat };
+            } else {
+                where = { id_cat: 0 };
             }
 
             if (!params) {

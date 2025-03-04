@@ -27,6 +27,8 @@ class GamesController {
 
             if (id_game) {
                 where = { id_game };
+            } else {
+                where = { id_game: 0 };
             }
 
             if (!params) {
@@ -141,7 +143,7 @@ class GamesController {
     public async uploadXhr(req: Request, res: Response) {
 
 
-        let fileMaxSize = 3000 * 1024;  /* 3ooMB de limite no arquivo */
+        let fileMaxSize = (300) * 1000 * 1024;  /* 300MB de limite no arquivo */
         const form = new IncomingForm({
             // uploadDir: path.join(__dirname, "../../uploads"), // Diretório temporário
             keepExtensions: true,
@@ -153,7 +155,7 @@ class GamesController {
 
             if (err) {
                 console.error("Erro ao processar upload:", err);
-                return res.status(500).json({ message: "Erro ao processar o upload." });
+                return res.status(500).json({ message: `Erro ao processar o upload. Erro: ${err}` });
             }
 
             // Capturar os campos enviados no FormData
