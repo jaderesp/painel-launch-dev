@@ -18,6 +18,7 @@ jms_app.controller('GamesController', ['$scope', '$window', '$http', '$timeout',
 
   $scope.filePreview = null
   $scope.selectedItem = {}
+  $scope.startStop = false
 
   $scope.selectFieldUpload = '' //campo do bd para upload
   $scope.selectFileDir = '' //dir/url do arquivo do cadastro selecionado
@@ -121,6 +122,19 @@ jms_app.controller('GamesController', ['$scope', '$window', '$http', '$timeout',
 
     }
 
+
+  }
+
+  $scope.setupEmuRoom = async () => {
+
+
+    if (!$scope.startStop) {
+      executeEMU(`${$scope.base_url}${$scope.selectFileDir}`)
+      $scope.startStop = true
+    } else {
+      stopEmulator()
+      $scope.startStop = false
+    }
 
   }
 

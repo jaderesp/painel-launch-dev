@@ -8,10 +8,22 @@
                     <h3>Enviar Arquivo</h3>
                     <p>Arquivo para upload no cadastro de game.</p>
 
+                    <div class="col-12 card">
+                        <div id="box" style="height: 600px; display: none;">
+
+                        </div>
+                    </div>
+
+
+
                     <form ng-submit="acao('upload',null)" class="row g-3">
                         <div class="col-12 text-center">
-                            <label class="btn btn-info" ng-show="selectFileDir"
-                                ng-bind="'Arquivo atual: ' + selectFileDir"></label>
+                            <a href="gamesTester/{{selectedItem.id_game}}" class="btn btn-info" ng-show="selectFileDir"
+                                ng-bind="'Arquivo atual: ' + selectFileDir"></a>
+                            <a href="javascript:void(0)" class="btn btn-primary" ng-click="setupEmuRoom()">
+                                <span ng-if="!startStop">Testar</span>
+                                <span ng-if="startStop">Parar</span>
+                            </a>
                         </div>
                         <div class="col-md-12">
                             <label class="form-label" for="file">Arquivo</label>
@@ -42,6 +54,7 @@
                             </div>
 
                         </div>
+
 
 
                         <div class="col-12">

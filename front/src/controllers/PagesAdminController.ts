@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 //acessar variaveis ENV
+import GamesService from '../services/GamesService';
 import dotenv from 'dotenv';
 dotenv.config();
 const { BASE_URL, PORT } = process.env;
@@ -26,6 +27,22 @@ export const games = async (req: Request, res: Response) => {
     let session = req.session;
 
     return res.render('admin/games/index', { BASE_URL, session });
+
+}
+
+export const gamesTester = async (req: Request, res: Response) => {
+
+    let session = req.session;
+    let { id_game } = req.params;
+
+    let param = {}
+    let game = {}
+
+    if (id_game) {
+        game = await GamesService.getSomeOne({ id_game });
+    }
+
+    return res.render('admin/gamesTester/index', { BASE_URL, session, game });
 
 }
 

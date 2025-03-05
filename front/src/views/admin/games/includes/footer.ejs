@@ -43,6 +43,212 @@
 <script src="../assets/js/script.js"></script>
 <script src="../assets/js/theme-customizer/customizer.js"></script>
 
+<!-- emulador online -->
+<!-- <script src="../custom/libs/emulatorjs/loader.js"></script> -->
+<script>
+
+    var box = document.getElementById("box");
+    let baseUrl = $("#baseUrl").val();
+    let enableDebug = false;
+    let enableThreads = false;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if (urlParams.get('debug') == 1) {
+        enableDebug = true;
+        console.log("Debug is enabled");
+    } else {
+        console.log("Debug is disabled");
+    }
+
+    if (urlParams.get('threads') == 1) {
+        if (window.SharedArrayBuffer) {
+            enableThreads = true;
+            console.log("Threads are enabled");
+        } else {
+            console.warn("Threads are disabled as SharedArrayBuffer is not available. Threads requires two headers to be set when sending you html page. See https://stackoverflow.com/a/68630724");
+            console.log("Threads are disabled");
+        }
+    } else {
+        console.log("Threads are disabled");
+    }
+
+    const executeEMU = async (url) => {
+
+
+        let nameOfFile = url.split("/").pop();
+
+        const parts = nameOfFile.split(".")
+
+        const core = await (async (ext) => {
+            if (["fds", "nes", "unif", "unf"].includes(ext))
+                return "nes"
+
+            if (["smc", "fig", "sfc", "gd3", "gd7", "dx2", "bsx", "swc"].includes(ext))
+                return "snes"
+
+            if (["z64", "n64"].includes(ext))
+                return "n64"
+
+            if (["pce"].includes(ext))
+                return "pce"
+
+            if (["ngp", "ngc"].includes(ext))
+                return "ngp"
+
+            if (["ws", "wsc"].includes(ext))
+                return "ws"
+
+            if (["col", "cv"].includes(ext))
+                return "coleco"
+
+            if (["d64"].includes(ext))
+                return "vice_x64sc"
+
+            if (["nds", "gba", "gb", "z64", "n64"].includes(ext))
+                return ext
+
+            return await new Promise(resolve => {
+                var coreValues = {
+                    "Nintendo 64": "n64",
+                    "Nintendo Game Boy": "gb",
+                    "Nintendo Game Boy Advance": "gba",
+                    "Nintendo DS": "nds",
+                    "Nintendo Entertainment System": "nes",
+                    "Super Nintendo Entertainment System": "snes",
+                    "PlayStation": "psx",
+                    "Virtual Boy": "vb",
+                    "Sega Mega Drive": "segaMD",
+                    "Sega Master System": "segaMS",
+                    "Sega CD": "segaCD",
+                    "Atari Lynx": "lynx",
+                    "Sega 32X": "sega32x",
+                    "Atari Jaguar": "jaguar",
+                    "Sega Game Gear": "segaGG",
+                    "Sega Saturn": "segaSaturn",
+                    "Atari 7800": "atari7800",
+                    "Atari 2600": "atari2600",
+                    "Arcade": "arcade",
+                    "NEC TurboGrafx-16/SuperGrafx/PC Engine": "pce",
+                    "NEC PC-FX": "pcfx",
+                    "SNK NeoGeo Pocket (Color)": "ngp",
+                    "Bandai WonderSwan (Color)": "ws",
+                    "ColecoVision": "coleco",
+                    "Commodore 64": "vice_x64sc",
+                    "Commodore 128": "vice_x128",
+                    "Commodore VIC20": "vice_xvic",
+                    "Commodore Plus/4": "vice_xplus4",
+                    "Commodore PET": "vice_xpet"
+                }
+
+                const cores = Object.keys(coreValues).sort().reduce(
+                    (obj, key) => {
+                        obj[key] = coreValues[key];
+                        return obj;
+                    },
+                    {}
+                );
+
+                const button = document.createElement("button")
+                const select = document.createElement("select")
+
+                for (const type in cores) {
+                    const option = document.createElement("option")
+
+                    option.value = cores[type]
+                    option.textContent = type
+                    select.appendChild(option)
+                }
+
+                button.onclick = () => resolve(select[select.selectedIndex].value)
+                button.textContent = "Carregando o jogo..."
+                box.innerHTML = ""
+
+                box.appendChild(select)
+                box.appendChild(button)
+            })
+        })(parts.pop())
+
+
+        const div = document.createElement("div")
+        const sub = document.createElement("div")
+        const script = document.createElement("script")
+
+        sub.id = "game"
+        div.id = "display"
+
+        //box?.remove()
+        //add a sub display, block
+        box.style.display = "block"
+        div.appendChild(sub)
+        //adicionar style height 400px ao box
+        div.style.height = "600px";
+        box.appendChild(div)
+
+        window.EJS_player = "#game";
+        window.EJS_gameName = parts.shift();
+        window.EJS_biosUrl = "";
+        window.EJS_gameUrl = url;
+        window.EJS_core = core;
+        window.EJS_pathtodata = "data/";
+        window.EJS_startOnLoaded = false;
+        window.EJS_DEBUG_XX = enableDebug;
+        window.EJS_disableDatabases = true;
+        window.EJS_threads = enableThreads;
+
+        // Remover script existente antes de adicionar um novo
+        const oldScript = document.querySelector("script[src*='emulatorjs/loader.js']");
+        if (oldScript) {
+            oldScript.remove();
+        }
+
+        script.src = `${baseUrl}/custom/libs/emulatorjs/loader.js`;
+        document.body.appendChild(script);
+    }
+    box.ondragover = () => box.setAttribute("drag", true);
+    box.ondragleave = () => box.removeAttribute("drag");
+
+
+    // Função para parar o emulador e limpar a tela
+    const stopEmulator = () => {
+        // Remover o contêiner do jogo
+        const gameContainer = document.getElementById("box");
+        if (gameContainer) {
+            //gameContainer.remove();
+        }
+
+        // Resetar a área do emulador
+        box.style.display = "none";
+        box.innerHTML = "";
+
+        // Remover o script do emulador (se necessário)
+        //const emulatorScript = document.querySelector("script[src*='emulatorjs/loader.js']");
+        //if (emulatorScript) {
+        //    emulatorScript.remove();
+        // }
+
+        // Resetar variáveis do EmulatorJS
+        window.EJS_player = ""
+        window.EJS_gameUrl = "";
+        window.EJS_gameName = "";
+        window.EJS_core = "";
+        window.EJS_biosUrl = "";
+        window.EJS_startOnLoaded = false;
+        window.EJS_DEBUG_XX = false;
+        window.EJS_disableDatabases = false;
+        window.EJS_threads = false;
+
+        console.log("Emulador parado e resetado.");
+    };
+
+
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
+    integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
+    data-cf-beacon='{"rayId":"91b66740583cf19d","version":"2025.1.0","r":1,"token":"192fdaadd1094fdfa2eb6daf77e04988","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}}}'
+    crossorigin="anonymous"></script>
+<!-- <script src="https://www.emulatorjs.com/loader.js"></script> -->
+<!--<script src="../custom/libs/emulatorjs/loader.js"></script>-->
+
 <!-- Angularjs  -->
 <!-- scripts comums -->
 <script>
@@ -59,6 +265,8 @@
     <script src="<%- BASE_URL %>/angular/angularjs/factorys/FileSetup.js"></script>
     <script src="<%- BASE_URL %>/angular/angularjs/factorys/Dtables.js"></script>
     <script src="<%- BASE_URL %>/angular/angularjs/factorys/index.js"></script>
+
+
 
     </body>
 
