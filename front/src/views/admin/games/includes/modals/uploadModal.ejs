@@ -18,8 +18,8 @@
 
                     <form ng-submit="acao('upload',null)" class="row g-3">
                         <div class="col-12 text-center">
-                            <a href="gamesTester/{{selectedItem.id_game}}" class="btn btn-info" ng-show="selectFileDir"
-                                ng-bind="'Arquivo atual: ' + selectFileDir"></a>
+                            <a href="gamesTester/{{selectedItem.id_game}}" target="_blank" class="btn btn-info"
+                                ng-show="selectFileDir" ng-bind="'Arquivo atual: ' + selectFileDir"></a>
                             <a href="javascript:void(0)" class="btn btn-primary" ng-click="setupEmuRoom()">
                                 <span ng-if="!startStop">Testar</span>
                                 <span ng-if="startStop">Parar</span>
