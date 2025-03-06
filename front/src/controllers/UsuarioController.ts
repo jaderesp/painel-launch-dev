@@ -18,6 +18,7 @@ class UsuarioController {
 
     public async createOrUpdate(req: Request, res: Response): Promise<Response> {
         try {
+
             const { id_usr, email, telefone } = req.body;
             const params = req.body;
             let where;
@@ -85,7 +86,7 @@ class UsuarioController {
     // Obter um usuário por ID
     public async getUsuarioById(req: Request, res: Response): Promise<Response> {
         try {
-            const { id } = req.params;
+            const { id } = req.body;
             const usuario = await UsuarioService.getSomeOne({ id_usr: id });
             if (!usuario) {
                 return res.status(404).json({ message: 'Usuário não encontrado.' });
@@ -99,11 +100,22 @@ class UsuarioController {
     }
 
     // Atualizar um usuário
-    public async updateUsuario(req: Request, res: Response): Promise<Response> {
+    public async update(req: Request, res: Response): Promise<Response> {
         try {
-            const { id } = req.params;
             const params = req.body;
-            const usuario = await UsuarioService.update(params, { id_usr: id });
+            let { id_usr } = params
+
+            if (!id_usr) {
+                return res.status(400).json({ message: 'ID do usuário não fornecido.' });
+            } else {
+                delete params.id_usr
+                if (!params.password) {
+                    delete params.password
+                }
+            }
+
+            const usuario = await UsuarioService.update(params, { id_usr });
+
             if (!usuario) {
                 return res.status(404).json({ message: 'Usuário não encontrado ou erro ao atualizar.' });
             }

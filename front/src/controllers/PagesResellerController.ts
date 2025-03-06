@@ -24,3 +24,9 @@ export const login = async (req: Request, res: Response) => {
     return res.render('reseller/login/index', { BASE_URL, PORT });
 
 }
+
+export const perfil = async (req: Request, res: Response) => {
+    let session = req.session;
+    return res.render('reseller/perfil/index', { BASE_URL, session });
+
+}

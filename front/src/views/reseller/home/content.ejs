@@ -1,55 +1,11 @@
 <!-- Page Sidebar Ends-->
-<div class="page-body">
+<div class="page-body" ng-controller="DashboardController">
   <div class="container-fluid">
     <div class="page-title">
       <div class="row">
         <div class="col-6">
           <h4>Gráfico
           </h4>
-          <div class="table-responsive theme-scrollbar custom-scrollbar">
-            <table id="minhaTabela" class="display nowrap" init-data-table>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nome</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="item in dados">
-                  <td>{{item.id}}</td>
-                  <td>{{item.nome}}</td>
-                  <td>{{item.email}}</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="card-body">
-              <div class="table-responsive theme-scrollbar custom-scrollbar">
-                <table class="display nowrap" id="stock" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Symbol</th>
-                      <th>Price</th>
-                      <th>Difference</th>
-                      <th>Last</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Name</th>
-                      <th>Symbol</th>
-                      <th>Price</th>
-                      <th>Difference</th>
-                      <th>Last</th>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-            </div>
-
-          </div>
 
         </div>
         <div class="col-6">

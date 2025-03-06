@@ -1,5 +1,5 @@
 <!-- Page Sidebar Ends-->
-<div class="page-body">
+<div class="page-body" ng-controller="UsuarioController">
   <div class="container-fluid">
     <div class="page-title">
       <div class="row">
@@ -26,17 +26,18 @@
       <div class="card">
         <div class="card-body">
           <!-- Stock result -->
-          <h3>Dados do Usuário</h3>
-          <p>Atualizar dados caso seja necessário.</p>
+          <h3>Meus Dados</h3>
+          <p>Atualizar dados do revendedor.</p>
 
-          <form ng-submit="acao('upsert',null)" class="row g-3">
+          <form ng-submit="acao('update',null)" class="row g-3">
 
             <div class="col-md-12">
               <label class="form-label" for="inputTypeUser">Tipo</label>
 
-              <select ng-model="frmUsuario.type_usuario" class="form-select" id="inputTypeUser"
-                ng-options="opcao.value as opcao.title for opcao in opcoes track by opcao.title" required>
+              <select ng-model="frmUsuario.type_usuario" class="form-select" id="inputTypeUser" required>
                 <option selected="">Seleciona o Tipo de Usuário</option>
+                <option ng-repeat="option in opcoes" ng-value="option.value">{{option.title}}</option>
+
               </select>
             </div>
             <div class="col-md-8">
@@ -66,7 +67,7 @@
               </div>
             </div>
             <!-- confirmar senha -->
-            <div class="row" ng-show="genSenha || !frmUsuario.id_usr">
+            <div class="row" ng-if="genSenha || !frmUsuario.id_usr">
 
               <div class=" col-md-6">
                 <label class="form-label" for="inputPassword4">Senha</label>
@@ -91,8 +92,7 @@
                             </div>
                         </div> -->
             <div class="col-12">
-              <button class="btn btn-success" type="submit">Salvar </button>
-              <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Fechar </button>
+              <button class="btn btn-success col-12" type="submit">Salvar </button>
             </div>
           </form>
         </div>

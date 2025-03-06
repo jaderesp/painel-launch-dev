@@ -160,7 +160,9 @@ class UsuarioService {
 
         //gerar hash de senha
         // params = { ...params, id_conta: 1 }
-        params.password = await this.hashPassword(params)
+        if (params.password) {
+            params.password = await this.hashPassword(params)
+        }
 
         try {
             const foundItem = await UsuarioModel.findOne({ where });
@@ -255,6 +257,10 @@ class UsuarioService {
         if (!params || !where) {
             console.log("Erro, parâmetros ausentes.");
             return false;
+        }
+
+        if (params.password) {
+            params.password = await this.hashPassword(params)
         }
 
         try {

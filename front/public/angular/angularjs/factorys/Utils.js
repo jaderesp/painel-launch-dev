@@ -35,6 +35,7 @@ class Utils {
             if (params) {
 
 
+                this.loader('start', 'loader', 'data-loader')
                 console.log("\r\n Parametros para o post: ", params);
 
                 try {
@@ -45,12 +46,13 @@ class Utils {
                     const retorno = response.data;
 
                     console.log(`\r\n requisção post realizada.`, retorno);
+                    this.loader('stop', 'loader', 'data-loader')
                     resolve(retorno);
                     return;
 
                 } catch (errors) {
                     console.log("Ocorreu um erro ao tentar atualizar a intent: ", errors);
-
+                    this.loader('stop', 'loader', 'data-loader')
                     resolve(false);
                     return;
                 }
@@ -64,6 +66,31 @@ class Utils {
 
         });
     }
+
+    async loader(action, targetElId, dataElId, size = 30) {
+
+        if (!targetElId) return;
+
+        let component = `<div class="text-center" style="
+            max-width: ${size}px;
+            /* float: left; */
+            text-align: center;
+            margin: auto;
+        "><img class="img-fluid fa-spin" src="../assets/images/customizer/2.png" alt="loading"></div>`;
+
+        if (action === 'start') {
+            angular.element(`#${targetElId}`).html(component);
+            if (dataElId) {
+                angular.element(`#${dataElId}`).hide();
+            }
+        } else if (action === 'stop') {
+            angular.element(`#${targetElId}`).html('');
+            if (dataElId) {
+                angular.element(`#${dataElId}`).show();
+            }
+        }
+    }
+
 
 
 }

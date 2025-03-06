@@ -9,8 +9,8 @@ router.post('/usuario/verifyExist', authenticateToken, UsuarioController.ifExist
 router.post('/usuario/setup', authenticateToken, UsuarioController.createOrUpdate); //create or update
 router.post('/usuarios/add', authenticateToken, UsuarioController.createUsuario);  //tb criará contato relacional
 router.post('/usuarios/list', authenticateToken, UsuarioController.getAllUsuarios);
-router.post('/usuarios/:id', authenticateToken, UsuarioController.getUsuarioById);
-router.post('/usuarios/:id', authenticateToken, UsuarioController.updateUsuario);
+router.post('/usuario/getById', authenticateToken, UsuarioController.getUsuarioById);
+router.post('/usuario/update', authenticateToken, UsuarioController.update);
 router.post('/usuarios/:id', authenticateToken, UsuarioController.deleteUsuario);
 
 
