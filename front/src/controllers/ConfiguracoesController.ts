@@ -18,12 +18,14 @@ class ConfiguracoesController {
 
     public async createOrUpdate(req: Request, res: Response): Promise<Response> {
         try {
-            const { idConf } = req.body;
+            const { id_conf } = req.body;
             const params = req.body;
             let where;
 
-            if (idConf) {
-                where = { idConf };
+            if (id_conf) {
+                where = { id_conf };
+            } else {
+                where = { id_conf: null };
             }
 
             if (!params) {
@@ -53,10 +55,10 @@ class ConfiguracoesController {
 
     // Buscar um contato por ID
     static async getOne(req: Request, res: Response) {
-        const { idConf } = req.params;
+        const { id_conf } = req.body;
 
         try {
-            const contato = await ConfiguracoesService.getSomeOne({ idConf });
+            const contato = await ConfiguracoesService.getSomeOne({ id_conf });
             if (!contato) {
                 return res.status(404).json({ message: 'Contato não encontrado.' });
             }
@@ -71,7 +73,7 @@ class ConfiguracoesController {
     // Obter uma config por ID
     public async getById(req: Request, res: Response): Promise<Response> {
         try {
-            const params = req.params;
+            const params = req.body;
             const config = await ConfiguracoesService.getSomeOne(params);
             if (!config) {
                 return res.status(404).json({ message: 'config não encontrada.' });
@@ -85,12 +87,23 @@ class ConfiguracoesController {
     // Atualizar uma config
     public async update(req: Request, res: Response): Promise<Response> {
         try {
-            const { idConf } = req.params;
-            const params = req.body;
-            const config = await ConfiguracoesService.update(params, { idConf });
-            if (!config) {
-                return res.status(404).json({ message: 'config não encontrada ou erro ao atualizar.' });
+
+            const { params } = req.body;
+
+            if (!params || params.length == 0) {
+                return res.status(400).json({ message: 'parametros não informados.' });
             }
+
+            for (var i = 0; params.length > i; i++) {
+
+                let { id_conf } = params[i];
+                const config = await ConfiguracoesService.update(params[i], { id_conf });
+                if (!config) {
+                    return res.status(404).json({ message: 'config não encontrada ou erro ao atualizar.' });
+                }
+
+            }
+
             return res.status(200).json({ message: 'config atualizada com sucesso.' });
         } catch (error) {
             return res.status(500).json({ message: 'Erro ao atualizar', error });
@@ -100,8 +113,8 @@ class ConfiguracoesController {
     // Remover uma config
     public async delete(req: Request, res: Response): Promise<Response> {
         try {
-            const { idConf } = req.params;
-            const result = await ConfiguracoesService.remove({ idConf });
+            const { id_conf } = req.body;
+            const result = await ConfiguracoesService.remove({ id_conf });
             if (!result) {
                 return res.status(404).json({ message: 'Registro não encontrada ou erro ao remover.' });
             }

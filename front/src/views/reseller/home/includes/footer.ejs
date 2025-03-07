@@ -1,6 +1,8 @@
 </div> <!-- segundo controller-->
 </div> <!-- primeiro controller-->
-
+<input type="hidden" name="baseUrl" id="baseUrl" value="<%- BASE_URL %>">
+<input type="hidden" name="token" id="token" value="<%- session.user.token %>">
+<input type="hidden" value="<%- session.user.session.id_usr %>" id="session">
 <!-- footer start-->
 <footer class="footer">
     <div class="container-fluid">
@@ -24,39 +26,7 @@
 <!-- scrollbar js-->
 <script src="../assets/js/scrollbar/simplebar.js"></script>
 <script src="../assets/js/scrollbar/custom.js"></script>
-<!-- Sidebar jquery-->
-<script src="../assets/js/config.js"></script>
-<!-- Plugins JS start-->
-<script src="../assets/js/sidebar-menu.js"></script>
-<script src="../assets/js/sidebar-pin.js"></script>
-<script src="../assets/js/slick/slick.min.js"></script>
-<script src="../assets/js/slick/slick.js"></script>
-<script src="../assets/js/header-slick.js"></script>
-<script src="../assets/js/chart/apex-chart/apex-chart.js"></script>
-<script src="../assets/js/chart/apex-chart/stock-prices.js"></script>
-<script src="../assets/js/chart/apex-chart/moment.min.js"></script>
-<script src="../assets/js/chart/echart/esl.js"></script>
-<script src="../assets/js/chart/echart/config.js"></script>
-<script src="../assets/js/chart/echart/pie-chart/facePrint.js"></script>
-<script src="../assets/js/chart/echart/pie-chart/testHelper.js"></script>
-<script src="../assets/js/chart/echart/pie-chart/custom-transition-texture.js"></script>
-<script src="../assets/js/chart/echart/data/symbols.js"></script>
-<!-- calendar js-->
-<script src="../assets/js/datepicker/date-picker/datepicker.js"></script>
-<script src="../assets/js/datepicker/date-picker/datepicker.en.js"></script>
-<script src="../assets/js/datepicker/date-picker/datepicker.custom.js"></script>
-<script src="../assets/js/dashboard/dashboard_3.js"></script>
-<!-- Plugins JS Ends-->
-<!-- Theme js-->
-<script src="../assets/js/script.js"></script>
-<script src="../assets/js/theme-customizer/customizer.js"></script>
 
-
-<!-- datatables -->
-<script src="../assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
-<!-- <script src="../assets/js/datatable/datatables/datatable.custom1.js"></script> -->
-<script src="../assets/js/datatable/datatable_advance.js"></script>
-<script src="../assets/js/tooltip-init.js"></script>
 
 
 <!-- Angularjs  -->
@@ -67,6 +37,43 @@
 </script>
 
 <%- include('../../comum/angularjs'); -%>
+
+
+    <!-- Sidebar jquery-->
+    <script src="../assets/js/config.js"></script>
+    <!-- Plugins JS start-->
+    <script src="../assets/js/sidebar-menu.js"></script>
+    <script src="../assets/js/sidebar-pin.js"></script>
+    <script src="../assets/js/slick/slick.min.js"></script>
+    <script src="../assets/js/slick/slick.js"></script>
+    <script src="../assets/js/header-slick.js"></script>
+    <script src="../assets/js/chart/apex-chart/apex-chart.js"></script>
+    <script src="../assets/js/chart/apex-chart/stock-prices.js"></script>
+    <script src="../assets/js/chart/apex-chart/moment.min.js"></script>
+    <script src="../assets/js/chart/echart/esl.js"></script>
+    <script src="../assets/js/chart/echart/config.js"></script>
+    <script src="../assets/js/chart/echart/pie-chart/facePrint.js"></script>
+    <script src="../assets/js/chart/echart/pie-chart/testHelper.js"></script>
+    <script src="../assets/js/chart/echart/pie-chart/custom-transition-texture.js"></script>
+    <script src="../assets/js/chart/echart/data/symbols.js"></script>
+    <!-- calendar js-->
+    <script src="../assets/js/datepicker/date-picker/datepicker.js"></script>
+    <script src="../assets/js/datepicker/date-picker/datepicker.en.js"></script>
+    <script src="../assets/js/datepicker/date-picker/datepicker.custom.js"></script>
+    <script src="../assets/js/dashboard/dashboard_3.js"></script>
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/theme-customizer/customizer.js"></script>
+
+
+    <!-- datatables -->
+    <script src="../assets/js/datatable/datatables/jquery.dataTables.min.js"></script>
+    <!-- <script src="../assets/js/datatable/datatables/datatable.custom1.js"></script> -->
+    <script src="../assets/js/datatable/datatable_advance.js"></script>
+    <script src="../assets/js/tooltip-init.js"></script>
+
+
 
     <script src="<%- BASE_URL %>/angular/angularjs/controllers/reseller/Dashboard.controller.js"></script>
     <!-- <script src="/js/app/services/Dashboard.factory.js"></script> -->

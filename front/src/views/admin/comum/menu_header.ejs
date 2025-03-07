@@ -34,7 +34,8 @@
               </h4><img class="mt-0" src="../assets/images/hand.gif" alt="hand-gif" />
             </div>
           </div>
-          <div class="welcome-content d-xl-block d-none"><span class="text-truncate col-12">Veja os dados atualizados do sistema aqui no dashboard. </span></div>
+          <div class="welcome-content d-xl-block d-none"><span class="text-truncate col-12">Veja os dados atualizados do
+              sistema aqui no dashboard. </span></div>
         </div>
         <div class="nav-right col-xxl-7 col-xl-6 col-md-7 col-8 pull-right right-header p-0 ms-auto">
           <ul class="nav-menus">
@@ -346,11 +347,15 @@
                 </div>
               </div>
               <ul class="profile-dropdown onhover-show-div">
-                <li><a href="../template/user-profile.html"><i data-feather="user"></i><span>My Profile</span></a></li>
-                <li><a href="../template/letter-box.html"><i data-feather="mail"></i><span>Inbox</span></a></li>
-                <li> <a href="../template/edit-profile.html"> <i data-feather="settings"></i><span>Settings</span></a>
+                <li><a href="/reseller/perfil"><i data-feather="user"></i><span>Meu Perfil</span></a></li>
+                <!--<li><a href="../template/letter-box.html"><i data-feather="mail"></i><span>Inbox</span></a></li> -->
+                <li> <a href="/reseller/configuracoes">
+                    <i data-feather="settings"></i><span>Configs</span>
+                  </a>
                 </li>
-                <li><button class="btn btn-pill btn-outline-primary btn-sm" ng-click="loggoff()">Log Out</button></li>
+                <li>
+                  <button class="btn btn-pill btn-outline-primary btn-sm" ng-click="setupSession(true)">Sair</button>
+                </li>
               </ul>
             </li>
           </ul>

@@ -37,7 +37,7 @@ jms_app.controller('SistemaController', ['$scope', '$window', '$http', '$timeout
 
                 $timeout(function () {
 
-                    $window.location.href = '/admin'
+                    $window.location.href = '/'
 
                 }, 5000)
 

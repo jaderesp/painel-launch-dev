@@ -12,45 +12,50 @@ class ConfiguracoesModel extends Model<ConfiguracoesModel> {
         allowNull: false,
         primaryKey: true,
     })
-    idConf!: number;
-
-    @Column({
-        type: DataType.INTEGER.UNSIGNED,
-        allowNull: false,
-    })
-    id_conta!: number;
+    id_conf!: number;
 
     @Column({
         type: DataType.STRING,
         allowNull: false,
-        defaultValue: "CONTACT"
+        defaultValue: 'APP' //OPÇÕES: APP/UPDATES
+
     })
     type!: string;
 
+    @Column({
+        type: DataType.STRING(800),
+        allowNull: false
+
+    })
+    titulo!: string;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: true,
+        type: DataType.STRING(2000),
+        allowNull: false
+
     })
-    horai!: string;
+    pacote!: string;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: true,
+        type: DataType.STRING(2000),
+        allowNull: true
+
     })
-    horaf!: string;
+    versao!: string;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: true,
+        type: DataType.STRING(2000),
+        allowNull: true
+
     })
-    dia_semana!: string;
+    descricao!: string;
 
     @Column({
-        type: DataType.STRING,
-        allowNull: true,
+        type: DataType.STRING(2000),
+        allowNull: true
+
     })
-    msg_offline!: string;
+    url_apk!: string;
 
     @CreatedAt
     declare createdAt: Date;

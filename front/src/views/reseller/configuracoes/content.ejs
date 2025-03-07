@@ -1,0 +1,94 @@
+<!-- Page Sidebar Ends-->
+<div class="page-body" ng-controller="ConfiguracoesController">
+  <div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-6">
+          <h4>Meu Perfil</h4>
+        </div>
+        <div class="col-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">
+                <svg class="stroke-icon">
+                  <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
+                </svg></a></li>
+            <li class="breadcrumb-item">Data Tables</li>
+            <li class="breadcrumb-item active">Advance Init</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Container-fluid starts                   -->
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="card">
+        <div class="card-header text-center">
+          <!-- Stock result -->
+          <h3>Meus Dados</h3>
+          <p>Atualizar dados do revendedor.</p>
+        </div>
+        <div class="card-body">
+
+
+          <form ng-submit="acao('update',null)" class="row g-3">
+
+            <div ng-repeat="frmConf in configuracoesList" class="col">
+
+              <div class="row">
+
+                <h3 ng-bind="frmConf.titulo"></h3>
+                <p>Atualizar dados de {{frmConf.type}}.</p>
+
+
+                <div class="col-md-12">
+                  <label class="form-label" for="inputtitulo">Título</label>
+                  <input ng-model="frmConf.titulo" class="form-control" id="inputtitulo" type="text"
+                    placeholder="Informe o título" required>
+                </div>
+
+                <div class="col-md-12">
+                  <label class="form-label" for="pacote">pacote</label>
+                  <input ng-model="frmConf.pacote" class="form-control" id="pacote" type="text"
+                    placeholder="Informe o Pacote" required>
+                </div>
+
+                <div class="col-md-12">
+                  <label class="form-label" for="versao">Versão</label>
+                  <input ng-model="frmConf.versao" class="form-control" id="versao" type="text"
+                    placeholder="Informe a Versão" required>
+                </div>
+
+                <div class="col-md-12">
+                  <label class="form-label" for="inputurl">Url</label>
+                  <textarea ng-model="frmConf.url_apk" class="form-control" id="inputurl"
+                    placeholder="Digite aqui a descrição...">
+                </div>
+
+                <div class="col-md-12">
+                  <label class="form-label" for="descricao">Descricao</label>
+                  <textarea ng-model="frmConf.descricao" class="form-control" id="descricao"
+                    placeholder="Digite aqui a descrição..."></textarea>
+                </div>
+
+              </div>
+            </div>
+
+
+            <!--<div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" id="gridCheck" type="checkbox">
+                                <label class="form-check-label d-block mb-0" for="gridCheck">Check me out</label>
+                            </div>
+                        </div> -->
+            <div class="col-12">
+              <button class="btn btn-success col-12" type="submit">Salvar </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Container-fluid Ends-->

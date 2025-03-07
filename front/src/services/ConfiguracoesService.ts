@@ -92,7 +92,13 @@ class ConfiguracoesService {
 
     // Atualizar usuário
     static async update(params: any, where: any) {
-        if (!params || !where) {
+
+        if (!params) {
+            console.log("Erro, parâmetros ausentes.");
+            return false;
+        }
+
+        if (!where) {
             console.log("Erro, parâmetros ausentes.");
             return false;
         }

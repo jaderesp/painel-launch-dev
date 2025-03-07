@@ -1,8 +1,13 @@
 import { Router } from 'express';
 import UsuarioController from '../controllers/UsuarioController';
 import { authenticateToken } from "../middlewares/accessToken";
+import { verifySession, logoff } from './default';
 
 const router = Router();
+
+//default routes
+router.post('/verifySession', verifySession);
+router.post('/logoff', logoff);
 
 router.post('/usuarios/login', UsuarioController.login);
 router.post('/usuario/verifyExist', authenticateToken, UsuarioController.ifExistUser); //verificar se usuario existe
