@@ -38,3 +38,10 @@ export const configuracoes = async (req: Request, res: Response) => {
     return res.render('reseller/configuracoes/index', { BASE_URL, session });
 
 }
+
+export const installs = async (req: Request, res: Response) => {
+
+    let session = req.session;
+    return res.render('reseller/installs/index', { BASE_URL, session });
+
+}

@@ -4,6 +4,7 @@ import ContaModel from "./ContaModel"
 import { ConfiguracoesModel } from "./ConfiguracoesModel"
 import { CategoriasModel } from "./CategoriasModel"
 import { GamesModel } from "./GamesModel"
+import { InstallRegsModel } from "./InstallRegsModel"
 
 
 const initializeModels = async (sequelize: Sequelize) => {
@@ -13,7 +14,8 @@ const initializeModels = async (sequelize: Sequelize) => {
         ContaModel,
         ConfiguracoesModel,
         CategoriasModel,
-        GamesModel
+        GamesModel,
+        InstallRegsModel
     ]); // Adicionar as models ao Sequelize
 };
 
@@ -23,6 +25,7 @@ export {
     ContaModel,
     ConfiguracoesModel,
     CategoriasModel,
-    GamesModel
+    GamesModel,
+    InstallRegsModel
 }
 export default UsuarioModel

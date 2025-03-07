@@ -12,7 +12,7 @@ class Utils {
     }
 
     /* add item no banco e retornar format html com id do banco nas funções */
-    async post(params, rota, token = null) {
+    async post(params, rota, token = null, loder = false) {
 
         return new Promise(async (resolve, reject) => {
 
@@ -35,7 +35,7 @@ class Utils {
             if (params) {
 
 
-                this.loader('start', 'loader', 'data-loader')
+                loder ? this.loader('start', 'loader', 'data-loader') : null;
                 console.log("\r\n Parametros para o post: ", params);
 
                 try {
@@ -52,7 +52,7 @@ class Utils {
 
                 } catch (errors) {
                     console.log("Ocorreu um erro ao tentar atualizar a intent: ", errors);
-                    this.loader('stop', 'loader', 'data-loader')
+                    loder ? this.loader('stop', 'loader', 'data-loader') : null;
                     resolve(false);
                     return;
                 }

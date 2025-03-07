@@ -7,6 +7,7 @@ import PagesAdmin from './pagesAdmin';
 import PagesReseller from './pagesReseller';
 import CategoriasRoute from './categoriasRoute';
 import GamesRoute from './gamesRoute';
+import InstallRegsRoute from './installRegsRoute';
 
 
 const router = Router();
@@ -26,6 +27,7 @@ router.use(configuracoesRoute);
 router.use(validateAccessToken)
 
 //api reseller
+router.use(InstallRegsRoute);
 
 
 export default router;

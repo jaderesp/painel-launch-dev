@@ -1,0 +1,85 @@
+<!-- Modal-->
+<div class="modal fade" id="frm_setup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-body social-profile text-start">
+                <div class="modal-toggle-wrapper">
+                    <h3>Dados da Instalação</h3>
+                    <p>Instalação e informações do cliente.</p>
+
+                    <form ng-submit="acao('upsert',null)" class="row g-3">
+
+                        <div class="col-md-8">
+                            <label class="form-label" for="inputNome">Nome</label>
+                            <input ng-model="frmInstall.titulo" class="form-control" id="inputNome" type="text"
+                                placeholder="Informe um título" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="telefone">Telefone</label>
+                            <input ng-model="frmInstall.telefone" class="form-control" id="telefone" type="text"
+                                placeholder="Digite aqui o telefone...">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputEndereco">Endereço</label>
+                            <input ng-model="frmInstall.endereco" class="form-control" id="inputEndereco" type="text"
+                                placeholder="Informe o endereço de intro">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label" for="inputStatus">Status</label>
+
+                            <select ng-model="frmInstall.status" class="form-select" id="inputStatus"
+                                ng-options="opcao.value as opcao.titulo for opcao in opcoes track by opcao.titulo"
+                                required>
+                                <option selected="">Seleciona o Status</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label" for="inputmac">MAC</label>
+                            <input ng-model="frmInstall.mac" class="form-control" id="inputmac" type="text"
+                                placeholder="Informe o mac da instalação">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label" for="inputip">IP</label>
+                            <input ng-model="frmInstall.ip" class="form-control" id="inputip" type="text"
+                                placeholder="Informe o endereço ip da instalação.">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label" for="inputurldata_instalacao">Data de Instalação</label>
+                            <input ng-model="frmInstall.data_instalacao" class="form-control"
+                                id="inputurldata_instalacao" type="text" placeholder="Informe a url do icone do jogo">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label" for="inputexpiracao">Data de Expiração</label>
+                            <input ng-model="frmInstall.expiracao" class="form-control" id="inputexpiracao" type="text"
+                                placeholder="Informe a url do icone do jogo">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputobservacoes">Observações</label>
+                            <textarea ng-model="frmInstall.observacoes" class="form-control" id="inputobservacoes"
+                                placeholder="Informe as observações aqui..."></textarea>
+                        </div>
+
+                        <!--<div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" id="gridCheck" type="checkbox">
+                                <label class="form-check-label d-block mb-0" for="gridCheck">Check me out</label>
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                            <button class="btn btn-success" type="submit">Salvar </button>
+                            <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Fechar </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
