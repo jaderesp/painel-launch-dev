@@ -143,9 +143,9 @@ class UsuarioController {
     public async login(req: Request, res: Response): Promise<Response> {
         try {
             const { email, password } = req.body;
-            const loginResult = await UsuarioService.login({ email, password });
+            const loginResult = await UsuarioService.login({ email, password, client: false });
             if (!loginResult.login) {
-                return res.status(401).json({ message: 'Credenciais inválidas.' });
+                return res.status(200).json({ login: false, message: 'Credenciais inválidas.' });
             }
 
             // Gravar sessão
@@ -155,12 +155,32 @@ class UsuarioController {
 
             let { session } = loginResult;
 
-            return res.status(200).json({ session });
+            return res.status(200).json({ login: true, session });
         } catch (error) {
-            return res.status(500).json({ message: 'Erro durante o login', error });
+            return res.status(500).json({ login: false, message: 'Erro durante o login', error });
         }
     }
 
+    public async loginClient(req: Request, res: Response): Promise<Response> {
+        try {
+            const { email, password } = req.body;
+            const loginResult = await UsuarioService.login({ email, password, client: true });
+            if (!loginResult.login) {
+                return res.status(200).json(loginResult);
+            }
+
+            // Gravar sessão
+            if (req.session) {
+                (req.session as any).user = loginResult || undefined;
+            }
+
+            let { session } = loginResult;
+
+            return res.status(200).json({ login: true, session });
+        } catch (error) {
+            return res.status(500).json({ login: false, message: 'Erro durante o login', error });
+        }
+    }
 
 }
 

@@ -123,12 +123,19 @@ class UsuarioService {
     }
 
     // Login de usuário
-    static async login(params: { email: string; password: string }) {
+    static async login(params: { email: string; password: string, client: boolean }) {
         try {
             const usuario = await UsuarioModel.findOne({ where: { email: params.email } });
             if (!usuario) {
                 return { login: false };
             }
+
+            let { type_usuario } = usuario
+
+            if (type_usuario !== 'admin' && !params.client) {
+                return { login: false, message: "Usuário não possui credemciais de administrador para realizar o login." };
+            }
+
 
             const { id_usr, password } = usuario;
             let resultado = {}

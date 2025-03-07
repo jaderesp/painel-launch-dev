@@ -6,7 +6,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
     $scope.port = $("#port").val();
     $scope.base = `${$scope.base_url}`
     $scope.Popup = Popup.modal = $ngConfirm
-    $scope.http = Utils
+    $scope.utils = Utils
 
     $scope.frmConfiguracoes = {}
     $scope.configuracoesList = []
@@ -18,9 +18,17 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
 
     $scope.list = async () => {
 
+        //ativar loader
+        $scope.utils.loader('start', 'loader', 'loadertaget', 35)
+
         $scope.configuracoesList = []
 
-        $scope.configuracoesList = await $scope.http.post({}, `${$scope.base_url}/configuracoes/list`, $scope.token)
+        $scope.utils.post({}, `${$scope.base_url}/configuracoes/list`, $scope.token).then((data) => {
+            //ativar loader
+            $scope.utils.loader('stop', 'loader', 'loadertaget')
+            $scope.configuracoesList = data
+        })
+
 
     }
 
@@ -41,7 +49,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
                     params.push(item)
                 }
 
-                let retorno = await $scope.http.post({ params }, `${$scope.base_url}/configuracoes/update`, $scope.token)
+                let retorno = await $scope.utils.post({ params }, `${$scope.base_url}/configuracoes/update`, $scope.token)
 
                 if (retorno) {
                     await Popup.confirm('Successo!', 'OS dados de configurações foram salvos.', 'OK', 'green');
@@ -50,6 +58,9 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
                 }
 
                 await $scope.list()
+
+
+
                 $("#frm_setup").modal('hide')
                 break;
             default:

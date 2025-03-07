@@ -31,61 +31,81 @@
         </div>
         <div class="card-body">
 
+          <!-- token de acesso a api  dados do cliente -->
+          <div class="row">
 
-          <form ng-submit="acao('update',null)" class="row g-3">
-
-            <div ng-repeat="frmConf in configuracoesList" class="col">
-
-              <div class="row">
-
-                <h3 ng-bind="frmConf.titulo"></h3>
-                <p>Atualizar dados de {{frmConf.type}}.</p>
-
-
-                <div class="col-md-12">
-                  <label class="form-label" for="inputtitulo">Título</label>
-                  <input ng-model="frmConf.titulo" class="form-control" id="inputtitulo" type="text"
-                    placeholder="Informe o título" required>
-                </div>
-
-                <div class="col-md-12">
-                  <label class="form-label" for="pacote">pacote</label>
-                  <input ng-model="frmConf.pacote" class="form-control" id="pacote" type="text"
-                    placeholder="Informe o Pacote" required>
-                </div>
-
-                <div class="col-md-12">
-                  <label class="form-label" for="versao">Versão</label>
-                  <input ng-model="frmConf.versao" class="form-control" id="versao" type="text"
-                    placeholder="Informe a Versão" required>
-                </div>
-
-                <div class="col-md-12">
-                  <label class="form-label" for="inputurl">Url</label>
-                  <textarea ng-model="frmConf.url_apk" class="form-control" id="inputurl"
-                    placeholder="Digite aqui a descrição...">
-                </div>
-
-                <div class="col-md-12">
-                  <label class="form-label" for="descricao">Descricao</label>
-                  <textarea ng-model="frmConf.descricao" class="form-control" id="descricao"
-                    placeholder="Digite aqui a descrição..."></textarea>
-                </div>
-
-              </div>
+            <div class="col-md-12">
+              <label class="form-label" for="inputtoken">Token de acesso a api:</label>
+              <input value="<%- session.user.token %>" class="form-control" id="inputtoken" readonly type="text"
+                required>
             </div>
 
+          </div>
 
-            <!--<div class="col-12">
+          <hr>
+
+          <div class="row">
+            <div class="col" id="loader">
+
+            </div>
+          </div>
+
+          <div id="loadertaget">
+            <form ng-submit="acao('update',null)" class="row g-3">
+
+              <div ng-repeat="frmConf in configuracoesList" class="col">
+
+                <div class="row">
+
+                  <h3 ng-bind="frmConf.titulo"></h3>
+                  <p>Atualizar dados de {{frmConf.type}}.</p>
+
+
+                  <div class="col-md-12">
+                    <label class="form-label" for="inputtitulo">Título</label>
+                    <input ng-model="frmConf.titulo" class="form-control" id="inputtitulo" type="text"
+                      placeholder="Informe o título" required>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="form-label" for="pacote">pacote</label>
+                    <input ng-model="frmConf.pacote" class="form-control" id="pacote" type="text"
+                      placeholder="Informe o Pacote" required>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="form-label" for="versao">Versão</label>
+                    <input ng-model="frmConf.versao" class="form-control" id="versao" type="text"
+                      placeholder="Informe a Versão" required>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="form-label" for="inputurl">Url</label>
+                    <textarea ng-model="frmConf.url_apk" class="form-control" id="inputurl"
+                      placeholder="Digite aqui a descrição...">
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="form-label" for="descricao">Descricao</label>
+                    <textarea ng-model="frmConf.descricao" class="form-control" id="descricao"
+                      placeholder="Digite aqui a descrição..."></textarea>
+                  </div>
+
+                </div>
+              </div>
+
+
+              <!--<div class="col-12">
                             <div class="form-check">
                                 <input class="form-check-input" id="gridCheck" type="checkbox">
                                 <label class="form-check-label d-block mb-0" for="gridCheck">Check me out</label>
                             </div>
                         </div> -->
-            <div class="col-12">
-              <button class="btn btn-success col-12" type="submit">Salvar </button>
-            </div>
-          </form>
+              <div class="col-12">
+                <button class="btn btn-success col-12" type="submit">Salvar </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
 

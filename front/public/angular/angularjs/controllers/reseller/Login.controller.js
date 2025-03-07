@@ -11,14 +11,24 @@ jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout',
 
     $scope.login = async () => {
 
-        $scope.http.post($scope.frmLogin, `${$scope.base}/usuarios/login`).then(async (retorno) => {
+        $scope.http.post($scope.frmLogin, `${$scope.base}/reseller/login`).then(async (retorno) => {
 
             console.log("Retorno login:", retorno)
 
             if (retorno) {
-                //redirecionar para dashboard
-                //$location.path('/dashboard')
-                $window.location.href = '/reseller/dashboard'
+
+                let { login, message } = retorno
+
+                if (login) {
+                    $window.location.href = '/reseller/dashboard'
+                    return;
+                } else {
+                    await Popup.confirm('Atenção!', message ? message : 'Ocorreu um erro ao realizar o login.', 'OK', 'red');
+                    $scope.frmLogin = {}
+                    // $window.location.href = '/admin/dashboard'
+                }
+
+
                 return;
             } else {
 
