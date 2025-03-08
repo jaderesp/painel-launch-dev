@@ -53,6 +53,18 @@ class UsuarioModel extends Model<UsuarioModel> {
     })
     type_usuario!: string;
 
+    @Column({
+        type: DataType.DATE,
+        allowNull: true,
+    })
+    data_expiracao!: string;
+
+    @Column({
+        type: DataType.STRING(600),
+        allowNull: true,
+    })
+    status!: string;
+
     @CreatedAt
     declare createdAt: Date;
 

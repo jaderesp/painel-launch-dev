@@ -25,6 +25,9 @@ import sequelize from './config/sequelize'; // Importa a configuração do Seque
 import { UsuarioService } from './services/index';      // Importa os models (Usuario, etc.)
 import { initializeModels } from './models/index';
 
+//jobs (serviços)
+import { checkExpirations } from "./jobs/checkExpirations";
+
 async function initialize() {
 
    initializeModels(sequelize)
@@ -77,6 +80,10 @@ server.listen(PORT, async () => {
       `🚀 App rodando via pid: ${process.pid} and na porta: ${PORT}`
    );
    swaggerDocs(app, PORT)
+
+   //executar serviço de atualização de status
+   checkExpirations();
+
 });
 
 type ShutdownEvent = 'SIGINT' | 'SIGTERM';
