@@ -33,8 +33,19 @@ class InstallRegsService {
 
             const updated = await InstallRegsModel.update(params, { where });
 
+            let data = await InstallRegsModel.findOne({ where });
+
+            if (data) {
+                //verificar se cliente está expirado
+                if (new Date(data.data_expiracao) < new Date()) {
+                    data.status = 'EXPIRADO';
+                } else {
+                    data.status = 'ATIVO';
+                }
+            }
+
             let retorno = {
-                instalacao: foundItem,
+                instalacao: data,
                 retorno: updated
             };
             return retorno;

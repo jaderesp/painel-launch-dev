@@ -66,8 +66,8 @@
                     <td>{{item.telefone}}</td>
                     <td>{{item.mac}}</td>
                     <td>{{item.ip}}</td>
-                    <td>{{item.data_instalacao}}</td>
-                    <td>{{item.data_expiracao}}</td>
+                    <td>{{item.data_instalacao | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td>{{item.data_expiracao | date:'dd-MM-yyyy HH:mm' }}</td>
                     <td>
                       <button class="btn btn-success btn-sm" ng-click="acao('edit',item)">Editar</button>
                       <button class="btn btn-danger btn-sm" ng-click="acao('delete',item)">Remover</button>

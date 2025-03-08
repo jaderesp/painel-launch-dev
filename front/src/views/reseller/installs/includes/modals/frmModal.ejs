@@ -49,16 +49,28 @@
                                 placeholder="Informe o endereço ip da instalação.">
                         </div>
 
-                        <div class="col-md-4">
-                            <label class="form-label" for="inputurldata_instalacao">Data de Instalação</label>
-                            <input ng-model="frmInstall.data_instalacao" class="form-control"
-                                id="inputurldata_instalacao" type="text" placeholder="Informe a url do icone do jogo">
+                        <div class="col-md-6">
+                            <label class="col-sm-3">Instalação </label>
+                            <div class="col-sm-9">
+                                <input ng-model="frmInstall.data_instalacao" class="form-control digits"
+                                    id="instalacao-datetime-local-input" type="datetime-local"
+                                    value="{{frmInstall.data_instalacao}}">
+                            </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-6">
                             <label class="form-label" for="inputexpiracao">Data de Expiração</label>
                             <input ng-model="frmInstall.expiracao" class="form-control" id="inputexpiracao" type="text"
                                 placeholder="Informe a url do icone do jogo">
+                        </div> -->
+
+                        <div class="col-md-6">
+                            <label class="col-sm-3">Expiração </label>
+                            <div class="col-sm-9">
+                                <input ng-model="frmInstall.data_expiracao" class="form-control digits"
+                                    id="expiracao-datetime-local-input" type="datetime-local"
+                                    value="{{frmInstall.data_expiracao}}">
+                            </div>
                         </div>
 
                         <div class="col-md-12">

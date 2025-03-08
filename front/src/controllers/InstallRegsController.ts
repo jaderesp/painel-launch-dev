@@ -41,7 +41,7 @@ class InstallRegsController {
             if (!retorno) {
                 return res.status(400).json({ message: 'Erro ao cadastrar.' });
             }
-            return res.status(201).json({message:"Registro de instalação foi salvo",retorno});
+            return res.status(201).json({ message: "Registro de instalação foi salvo.", retorno });
         } catch (error) {
             return res.status(500).json({ message: 'Erro interno do servidor', error });
         }
@@ -54,6 +54,32 @@ class InstallRegsController {
             return res.status(200).json(datas);
         } catch (error) {
             return res.status(500).json({ message: 'Erro ao buscar datas', error });
+        }
+    }
+
+    public async get(req: Request, res: Response): Promise<Response> {
+        try {
+            const where = req.params;
+
+            if (!where) {
+                return res.status(200).json({ message: 'Parametros para pesquisa não foram informados.' });
+            }
+
+            let data = await InstallRegsService.getSomeOne(where);
+            if (!data) {
+                return res.status(404).json({ message: 'Nenhum registro encontrada.' });
+            }
+
+            //verificar se cliente está expirado
+            if (new Date(data.data_expiracao) < new Date()) {
+                data.status = 'EXPIRADO';
+            } else {
+                data.status = 'ATIVO';
+            }
+
+            return res.status(200).json(data);
+        } catch (error) {
+            return res.status(500).json({ message: 'Erro ao buscar data', error });
         }
     }
 

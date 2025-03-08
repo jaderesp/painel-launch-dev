@@ -55,6 +55,8 @@ jms_app.controller('InstallsController', ['$scope', '$window', '$http', '$timeou
         break;
       case 'edit':
         delete item.password
+        item.data_expiracao = item.data_expiracao ? moment(item.data_expiracao).format('YYYY-MM-DDThh:mm') : ''
+        item.data_instalacao = item.data_instalacao ? moment(item.data_instalacao).format('YYYY-MM-DDThh:mm') : ''
         angular.extend($scope.frmInstall, item)
         //abrir modal com os dados (form)
         $("#frm_setup").modal('show')

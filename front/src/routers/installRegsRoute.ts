@@ -4,6 +4,7 @@ import { authenticateToken } from "../middlewares/accessToken";
 
 const router = Router();
 
+router.post('/install/status', authenticateToken, InstallRegsController.get);
 router.post('/install/verifyExist', authenticateToken, InstallRegsController.ifExist);
 router.post('/install/add', authenticateToken, InstallRegsController.create);
 router.post('/install/setup', authenticateToken, InstallRegsController.createOrUpdate);
