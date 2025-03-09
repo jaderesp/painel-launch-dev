@@ -1,0 +1,140 @@
+<!-- Page Sidebar Ends-->
+<div class="page-body" ng-controller="ConfiguracoesController">
+  <div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-6">
+          <h4>Meu Perfil</h4>
+        </div>
+        <div class="col-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">
+                <svg class="stroke-icon">
+                  <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
+                </svg></a></li>
+            <li class="breadcrumb-item">Data Tables</li>
+            <li class="breadcrumb-item active">Advance Init</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Container-fluid starts                   -->
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="card">
+        <div class="card-header text-center">
+          <!-- Stock result -->
+          <h3>Meus Dados</h3>
+          <p>Atualizar dados do revendedor.</p>
+        </div>
+        <div class="card-body">
+
+          <hr>
+
+          <div class="row">
+            <div class="col" id="loader">
+
+            </div>
+          </div>
+
+          <div id="loadertaget">
+            <form ng-submit="acao('update',null)" class="row g-3">
+
+              <div ng-repeat="frmConf in configuracoesList" class="col-12" ng-if="frmConf.type === 'MIDIA'">
+
+                <div class="row">
+
+                  <div class="col-12 text-center">
+                    <h3 ng-bind="frmConf.titulo"></h3>
+                    <p>Atualizar dados de {{frmConf.type}}.</p>
+                  </div>
+
+                  <div class="row">
+                    <!-- option radio = para selecionar qual tipo de input visualizar, logo, back ou banner -->
+                    <div class="col-md-12 text-center">
+
+                      <button ng-click="selectMenu('logo')"
+                        ng-class="selectinputsView.logo === true ? 'btn-success':'btn-info'" class="btn btn-info"
+                        type="button">Logo</button>
+                      <button ng-click="selectMenu('back')"
+                        ng-class="selectinputsView.back === true ? 'btn-success':'btn-info'" class="btn btn-info"
+                        type="button">Back</button>
+                      <button ng-click="selectMenu('banner')"
+                        ng-class="selectinputsView.banner === true ? 'btn-success':'btn-info'" class="btn btn-info"
+                        type="button">Banner</button>
+
+                    </div>
+
+
+                    <!-- CAMPOS DE MIDIA -->
+                    <div class="row" ng-show="selectinputsView.logo === true" ng-repeat="item in frmDinamico.img_logo">
+                      <div class="col-xl-8 col-md-6 col-12 mb-1 ">
+                        <label class="form-label" for="fileLogo" ng-bind="'Logo ' + $index"></label>
+                        <input ng-model="item.img_logo.url" class="form-control" id="fileLogo" type="text"
+                          placeholder="Informe a url da imagem" required>
+                      </div>
+                      <div class="col-xl-4 col-md-6 col-12 p-4 ">
+                        <button ng-click="setupMultiInputs($index,'img_logo','remove')" class="btn btn-warning"
+                          type="button" ng-click="">-</button>
+                        <button ng-click="setupMultiInputs($index,'img_logo','add')" class="btn btn-success"
+                          type="button" ng-click="">+</button>
+                      </div>
+                    </div>
+
+                    <div class="row" ng-show="selectinputsView.back === true" ng-repeat="item in frmDinamico.img_back">
+                      <div class="col-xl-8 col-md-6 col-12 mb-1 ">
+                        <label class="form-label" for="fileLogo" ng-bind="'background ' + $index"></label>
+                        <input ng-model="item.img_back.url" class="form-control" id="fileLogo" type="text"
+                          placeholder="Informe a url da imagem" required>
+                      </div>
+                      <div class="col-xl-4 col-md-6 col-12 p-4 ">
+                        <button ng-click="setupMultiInputs($index,'img_back','remove')" class="btn btn-warning"
+                          type="button" ng-click="">-</button>
+                        <button ng-click="setupMultiInputs($index,'img_back','add')" class="btn btn-success"
+                          type="button" ng-click="">+</button>
+                      </div>
+                    </div>
+
+                    <div class="row" ng-show="selectinputsView.banner === true"
+                      ng-repeat="item in frmDinamico.img_banner">
+                      <div class="col-xl-8 col-md-6 col-12 mb-1 ">
+                        <label class="form-label" for="fileLogo" ng-bind="'Banner ' + $index"></label>
+                        <input ng-model="item.img_banner.url" class="form-control" id="fileLogo" type="text"
+                          placeholder="Informe a url da imagem" required>
+                      </div>
+                      <div class="col-xl-4 col-md-6 col-12 p-4 ">
+                        <button ng-click="setupMultiInputs($index,'img_banner','remove')" class="btn btn-warning"
+                          type="button" ng-click="">-</button>
+                        <button ng-click="setupMultiInputs($index,'img_banner','add')" class="btn btn-success"
+                          type="button" ng-click="">+</button>
+                      </div>
+                    </div>
+
+
+
+
+                    <!-- FIM CAMPOS DE MIDIA -->
+
+                  </div>
+                </div>
+
+
+                <!--<div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" id="gridCheck" type="checkbox">
+                                <label class="form-check-label d-block mb-0" for="gridCheck">Check me out</label>
+                            </div>
+                        </div> -->
+                <div class="col-12">
+                  <button class="btn btn-success col-12" type="submit">Salvar </button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Container-fluid Ends-->

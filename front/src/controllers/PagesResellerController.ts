@@ -39,6 +39,13 @@ export const configuracoes = async (req: Request, res: Response) => {
 
 }
 
+export const configMidias = async (req: Request, res: Response) => {
+
+    let session = req.session;
+    return res.render('reseller/midias/index', { BASE_URL, session });
+
+}
+
 export const installs = async (req: Request, res: Response) => {
 
     let session = req.session;

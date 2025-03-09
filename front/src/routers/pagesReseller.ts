@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { categorias, home, login, perfil, configuracoes, installs } from '../controllers//PagesResellerController';
+import { categorias, home, login, perfil, configuracoes, configMidias, installs } from '../controllers//PagesResellerController';
 import { verifySession } from './default';
 import { verificarSessao } from '../middlewares/authResellers';
 
@@ -11,6 +11,7 @@ router.get('/reseller/dashboard', verificarSessao, home);
 router.get('/reseller/categorias', verificarSessao, categorias);
 router.get('/reseller/perfil', verificarSessao, perfil);
 router.get('/reseller/configuracoes', verificarSessao, configuracoes);
+router.get('/reseller/midias', verificarSessao, configMidias);
 router.get('/reseller/installs', verificarSessao, installs);
 
 export default router;

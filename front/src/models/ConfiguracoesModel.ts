@@ -57,6 +57,15 @@ class ConfiguracoesModel extends Model<ConfiguracoesModel> {
     })
     img_banner!: string;
 
+
+    @Column({
+        type: DataType.STRING(1000),
+        allowNull: true
+
+    })
+    img_back!: string;
+
+
     @Column({
         type: DataType.STRING(2000),
         allowNull: true
