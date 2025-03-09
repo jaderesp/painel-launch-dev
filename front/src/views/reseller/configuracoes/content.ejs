@@ -34,6 +34,11 @@
           <!-- token de acesso a api  dados do cliente -->
           <div class="row">
 
+            <div class="col-12 text-center">
+              <h3>Acesso à API</h3>
+              <p>Tokens de acesso de dados via api.</p>
+            </div>
+
             <div class="col-md-12">
               <label class="form-label" for="inputtoken">Token de acesso a api:</label>
               <input value="<%- session.user.token %>" class="form-control" id="inputtoken" readonly type="text"
@@ -53,39 +58,71 @@
           <div id="loadertaget">
             <form ng-submit="acao('update',null)" class="row g-3">
 
-              <div ng-repeat="frmConf in configuracoesList" class="col">
+              <div ng-repeat="frmConf in configuracoesList" class="col-12">
 
                 <div class="row">
 
-                  <h3 ng-bind="frmConf.titulo"></h3>
-                  <p>Atualizar dados de {{frmConf.type}}.</p>
+                  <div class="col-12 text-center">
+                    <h3 ng-bind="frmConf.titulo"></h3>
+                    <p>Atualizar dados de {{frmConf.type}}.</p>
+                  </div>
 
-
-                  <div class="col-md-12">
+                  <div class="col-md-12" ng-if="frmConf.type !== 'MIDIA'">
                     <label class="form-label" for="inputtitulo">Título</label>
                     <input ng-model="frmConf.titulo" class="form-control" id="inputtitulo" type="text"
                       placeholder="Informe o título" required>
                   </div>
 
-                  <div class="col-md-12">
+                  <div class="col-md-12" ng-if="frmConf.type !== 'MIDIA'">
                     <label class="form-label" for="pacote">pacote</label>
                     <input ng-model="frmConf.pacote" class="form-control" id="pacote" type="text"
                       placeholder="Informe o Pacote" required>
                   </div>
 
-                  <div class="col-md-12">
+                  <div class="col-md-12" ng-if="frmConf.type !== 'MIDIA'">
                     <label class="form-label" for="versao">Versão</label>
                     <input ng-model="frmConf.versao" class="form-control" id="versao" type="text"
                       placeholder="Informe a Versão" required>
                   </div>
 
-                  <div class="col-md-12">
+                  <div class="col-md-12" ng-if="frmConf.type !== 'MIDIA'">
+                    <label class="form-label" for="file">Imagem do App</label>
+                    <input ng-model="frmConf.img_app" class="form-control"
+                      onchange="angular.element(this).scope().uploadView(this)" id="file" type="file"
+                      placeholder="Selecione um arquivo de video (mp4, avi)">
+                  </div>
+
+                  <!-- CAMPOS DE MIDIA -->
+                  <div class="col-md-12" ng-if="frmConf.type === 'MIDIA'">
+                    <label class="form-label" for="file">Logo</label>
+                    <input ng-model="frmConf.img_app" class="form-control"
+                      onchange="angular.element(this).scope().uploadView(this)" id="file" type="file"
+                      placeholder="Selecione um arquivo de video (mp4, avi)">
+                  </div>
+
+                  <div class="col-md-12" ng-if="frmConf.type === 'MIDIA'">
+                    <label class="form-label" for="file">Backgound</label>
+                    <input ng-model="frmConf.img_app" class="form-control"
+                      onchange="angular.element(this).scope().uploadView(this)" id="file" type="file"
+                      placeholder="Selecione um arquivo de video (mp4, avi)">
+                  </div>
+
+                  <div class="col-md-12" ng-if="frmConf.type === 'MIDIA'">
+                    <label class="form-label" for="file">Banners</label>
+                    <input ng-model="frmConf.img_app" class="form-control"
+                      onchange="angular.element(this).scope().uploadView(this)" id="file" type="file"
+                      placeholder="Selecione um arquivo de video (mp4, avi)">
+                  </div>
+
+                  <!-- FIM CAMPOS DE MIDIA -->
+
+                  <div class="col-md-12" ng-if="frmConf.type !== 'MIDIA'">
                     <label class="form-label" for="inputurl">Url</label>
                     <textarea ng-model="frmConf.url_apk" class="form-control" id="inputurl"
                       placeholder="Digite aqui a descrição...">
                   </div>
 
-                  <div class="col-md-12">
+                  <div class="col-md-12" ng-if="frmConf.type !== 'MIDIA'">
                     <label class="form-label" for="descricao">Descricao</label>
                     <textarea ng-model="frmConf.descricao" class="form-control" id="descricao"
                       placeholder="Digite aqui a descrição..."></textarea>

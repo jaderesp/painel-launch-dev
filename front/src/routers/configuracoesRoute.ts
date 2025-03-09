@@ -10,5 +10,6 @@ router.post('/configuracoes/list', authenticateToken, ConfiguracoesController.ge
 router.post('/configuracoes/getById', authenticateToken, ConfiguracoesController.getById);
 router.post('/configuracoes/update', authenticateToken, ConfiguracoesController.update);
 router.post('/configuracoes/remove', authenticateToken, ConfiguracoesController.delete);
+router.post('/configuracoes/uploadXhr', authenticateToken, ConfiguracoesController.uploadXhr);
 
 export default router;

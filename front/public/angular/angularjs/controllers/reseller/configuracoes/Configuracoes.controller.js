@@ -32,7 +32,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
 
     }
 
-    $scope.acao = async (action, item) => {
+    $scope.acao = async (action, item, fieldUpload) => {
 
         //swicth
         switch (action) {
@@ -44,7 +44,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
                 //limpar o objcto
                 for (var i = 0; i < arr.length; i++) {
                     let item = {}
-                    angular.extend(item, arr[i])
+                    // angular.extend(item, arr[i])
                     angular.extend(item, arr[i])
                     params.push(item)
                 }
@@ -59,9 +59,18 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
 
                 await $scope.list()
 
-
-
                 $("#frm_setup").modal('hide')
+                break;
+            case 'upload':
+                let { id_conf } = item
+                let file = document.getElementById('file').files[0]
+                //ativar loader
+                $scope.utils.loader('start', 'loaderUpload', 'loadertagetUp', 15)
+                //exibir modal de upload (informar a pasta e id para gerar subpasta no diretorio de destino do arquivo)
+                let res = await $scope.fileSetup.upload(file, [{ id: id_conf, dir: 'configuracoes', subdir: `${id_conf}`, fieldtable: `${fieldUpload}` }], `${$scope.base_url}/${$scope.mainRoute}/uploadXhr`, $scope.token)
+                $scope.utils.loader('stop', 'loaderUpload', 'loadertagetUp')
+                await $scope.list()
+                //desatviar loader
                 break;
             default:
                 break;
