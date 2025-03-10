@@ -12,4 +12,7 @@ router.post('/configuracoes/update', authenticateToken, ConfiguracoesController.
 router.post('/configuracoes/remove', authenticateToken, ConfiguracoesController.delete);
 router.post('/configuracoes/uploadXhr', authenticateToken, ConfiguracoesController.uploadXhr);
 
+//api custom (interfaces)
+router.get('/api/app-data', authenticateToken, ConfiguracoesController.customConfigData);
+
 export default router;

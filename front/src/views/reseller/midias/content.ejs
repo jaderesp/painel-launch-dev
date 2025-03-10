@@ -12,8 +12,8 @@
                 <svg class="stroke-icon">
                   <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
                 </svg></a></li>
-            <li class="breadcrumb-item">Data Tables</li>
-            <li class="breadcrumb-item active">Advance Init</li>
+            <li class="breadcrumb-item">Configurações</li>
+            <li class="breadcrumb-item active">Midias</li>
           </ol>
         </div>
       </div>
@@ -72,7 +72,7 @@
                     <div class="row" ng-show="selectinputsView.logo === true" ng-repeat="item in frmDinamico.img_logo">
                       <div class="col-xl-8 col-md-6 col-12 mb-1 ">
                         <label class="form-label" for="fileLogo" ng-bind="'Logo ' + $index"></label>
-                        <input ng-model="item.img_logo.url" class="form-control" id="fileLogo" type="text"
+                        <input ng-model="item.url" class="form-control" id="fileLogo" type="text"
                           placeholder="Informe a url da imagem" required>
                       </div>
                       <div class="col-xl-4 col-md-6 col-12 p-4 ">
@@ -86,7 +86,7 @@
                     <div class="row" ng-show="selectinputsView.back === true" ng-repeat="item in frmDinamico.img_back">
                       <div class="col-xl-8 col-md-6 col-12 mb-1 ">
                         <label class="form-label" for="fileLogo" ng-bind="'background ' + $index"></label>
-                        <input ng-model="item.img_back.url" class="form-control" id="fileLogo" type="text"
+                        <input ng-model="item.url" class="form-control" id="fileLogo" type="text"
                           placeholder="Informe a url da imagem" required>
                       </div>
                       <div class="col-xl-4 col-md-6 col-12 p-4 ">
@@ -101,7 +101,7 @@
                       ng-repeat="item in frmDinamico.img_banner">
                       <div class="col-xl-8 col-md-6 col-12 mb-1 ">
                         <label class="form-label" for="fileLogo" ng-bind="'Banner ' + $index"></label>
-                        <input ng-model="item.img_banner.url" class="form-control" id="fileLogo" type="text"
+                        <input ng-model="item.url" class="form-control" id="fileLogo" type="text"
                           placeholder="Informe a url da imagem" required>
                       </div>
                       <div class="col-xl-4 col-md-6 col-12 p-4 ">
@@ -130,6 +130,7 @@
                 <div class="col-12">
                   <button class="btn btn-success col-12" type="submit">Salvar </button>
                 </div>
+              </div>
             </form>
           </div>
         </div>

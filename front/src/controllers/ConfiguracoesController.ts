@@ -188,6 +188,102 @@ class ConfiguracoesController {
 
         });
     }
+
+    //rotas de interfaces customizadas
+    public customConfigData = async (req: Request, res: Response) => {
+        try {
+            const configuracoes = await ConfiguracoesService.getAll();
+
+
+            //converter os dados de img_logo, img_back e imb_banner de string para json
+            configuracoes.forEach((config) => {
+                if (config.img_logo) {
+                    config.img_logo = JSON.parse(config.img_logo);
+
+                    let concat = ''
+                    for (var i = 0; i < config.img_logo.length; i++) {
+                        //acessar o indice url se ele existir (config.img_logo[i].url)
+                        let obj = JSON.parse(JSON.stringify(config.img_logo[i]))
+                        let str_ = obj.url
+                        concat += JSON.stringify(str_).replace(/"/g, '')
+
+                        if (i < (config.img_logo.length - 1)) {
+                            concat += ","
+                        }
+                    }
+
+                    config.img_logo = concat;
+                }
+                if (config.img_back) {
+                    config.img_back = JSON.parse(config.img_back);
+
+                    //concatenar urls em string separadas por virgula
+                    let concat = ''
+                    for (var i = 0; i < config.img_back.length; i++) {
+                        //acessar o indice url se ele existir (config.img_logo[i].url)
+                        let obj = JSON.parse(JSON.stringify(config.img_back[i]))
+                        let str_ = obj.url
+                        concat += JSON.stringify(str_).replace(/"/g, '')
+
+                        if (i < (config.img_back.length - 1)) {
+                            concat += ","
+                        }
+                    }
+
+                    config.img_back = concat;
+
+                    config.img_back = JSON.stringify(config.img_back).replace(/"/g, '');
+                }
+                if (config.img_banner) {
+                    config.img_banner = JSON.parse(config.img_banner);
+
+                    //concatenar urls em string separadas por virgula
+                    let concat = ''
+                    for (var i = 0; i < config.img_banner.length; i++) {
+                        //acessar o indice url se ele existir (config.img_logo[i].url)
+                        let obj = JSON.parse(JSON.stringify(config.img_banner[i]))
+                        let str_ = obj.url
+                        concat += JSON.stringify(str_).replace(/"/g, '')
+
+                        if (i < (config.img_banner.length - 1)) {
+                            concat += ","
+                        }
+                    }
+
+                    config.img_banner = concat;
+
+                    config.img_banner = JSON.stringify(config.img_banner).replace(/"/g, '');
+                }
+            });
+
+
+            //percorrer os dados de img_logo, img_back e imb_banner converter dados para string e concaterná-las separando por vírgula.
+
+
+            const responseData = configuracoes.map((config) => ({
+
+                logo: config.img_logo, //converter string para json
+                back: config.img_back,
+                video: config.img_banner,
+                pacote: config.pacote,
+                versionupdate: config.versao,
+                descricaoupdate: config.descricao,
+                urlupdate: config.url_apk,
+                img_app: config.img_app,
+                name_app: config.titulo,
+                pacote_app: config.pacote,
+                version_app: config.versao,
+                descricao_app: config.descricao,
+                url_app: config.url_apk,
+            }));
+
+            res.json({ code: 0, msg: 'success', data: responseData });
+        } catch (error) {
+            res.status(500).json({ code: 1, msg: 'Erro ao buscar os dados', error });
+        }
+    }
+
+
 }
 
 export default new ConfiguracoesController();
