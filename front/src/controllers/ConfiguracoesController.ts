@@ -58,9 +58,11 @@ class ConfiguracoesController {
             //retornar somente dados refrente ao usuario logado
             let where = req.body
 
-            if (!where) {
-                let { id_usr } = user ? ('id_usr' in user ? user : {}) : {};
+            if (Object.keys(where).length == 0) {
+                let { id_usr } = user ? ('id_usr' in user ? user : { id_usr: null }) : { id_usr: null };
                 where = { id_usr }
+            } else {
+                return res.status(200).json({ messege: "Nenhum dado de configurações foi encontrado." })
             }
 
             const configs = await ConfiguracoesService.get(where);
