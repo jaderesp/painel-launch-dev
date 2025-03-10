@@ -17,8 +17,9 @@ export class AuthService {
         return bcrypt.compare(password, hash);
     }
 
-    static generateToken(userId: string): string {
-        return jwt.sign({ userId }, SECRET_KEY, { expiresIn: EXPIRES_IN });
+    static generateToken(userId: string, expire_ = true): string {
+        let conf = expire_ ? { expiresIn: EXPIRES_IN } : {}
+        return jwt.sign({ userId }, SECRET_KEY, conf);
     }
 
     static verifyToken(token: string): any {

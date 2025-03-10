@@ -1,9 +1,11 @@
 import { UsuarioModel } from '../models/UsuarioModel';
+import ConfiguracoesService from '../services/ConfiguracoesService';
 import sequelize from '../config/sequelize'; // Configuração do banco de dados
 import * as bcrypt from 'bcrypt';
 import { Int32 } from 'typeorm';
 import { IUserResponse } from '../interfaces/IUserResponse';
 import { AuthService } from "./authService";
+import { Op } from 'sequelize';
 
 
 class UsuarioService {
@@ -146,7 +148,90 @@ class UsuarioService {
             }
 
             //gera token de autenticação
-            const token = AuthService.generateToken(id_usr.toString());
+            const token = AuthService.generateToken(id_usr.toString(), false);
+
+            if (token) {
+
+                //armazenar token no cadastro do usuario
+                let where = {
+                    where: {
+                        id_usr,
+                        token: { [Op.eq]: null }
+                    }
+                }
+
+                await UsuarioModel.update({ token }, where);
+
+                //verificar se já existe configuração cadastrada
+                let exist = await ConfiguracoesService.get({ id_usr })
+
+
+                if (Object.keys(exist).length == 0) {
+
+                    //cadastrar configurações do usuario
+                    let configs = [
+                        {
+                            "id_conf": 4,
+                            "id_usr": id_usr,
+                            "type": "MIDIA",
+                            "titulo": "Configurações de Mídias",
+                            "pacote": "",
+                            "img_app": "[{'url':\"\"}]",
+                            "img_logo": "[{\"url\":\"\"}]",
+                            "img_banner": "[{\"url\":\"\"}]",
+                            "img_back": "[{\"url\":\"\"}]",
+                            "versao": "",
+                            "descricao": "Configurações de aplicativos (Updates)",
+                            "url_apk": "",
+                            "createdAt": "2025-02-17T19:11:28.000Z",
+                            "updatedAt": "2025-03-10T14:54:29.000Z"
+                        },
+                        {
+                            "id_conf": 5,
+                            "id_usr": id_usr,
+                            "type": "APP",
+                            "titulo": "Configurações de Apps",
+                            "pacote": "teste",
+                            "img_app": "https://img.odcdn.com.br/wp-content/uploads/2017/01/20170127024951.png",
+                            "img_logo": null,
+                            "img_banner": null,
+                            "img_back": null,
+                            "versao": "2.3.1",
+                            "descricao": "Configurações de aplicativos (APK)",
+                            "url_apk": "teste",
+                            "createdAt": "2025-02-17T19:11:28.000Z",
+                            "updatedAt": "2025-03-10T14:54:29.000Z"
+                        },
+                        {
+                            "id_conf": 6,
+                            "id_usr": id_usr,
+                            "type": "UPDATE",
+                            "titulo": "Configurações de Updates",
+                            "pacote": "",
+                            "img_app": "",
+                            "img_logo": null,
+                            "img_banner": null,
+                            "img_back": null,
+                            "versao": "",
+                            "descricao": "Configurações de aplicativos (Updates)",
+                            "url_apk": "",
+                            "createdAt": "2025-02-17T19:11:28.000Z",
+                            "updatedAt": "2025-03-10T14:54:29.000Z"
+                        }
+                    ]
+
+                    for (var i = 0; i < configs.length; i++) {
+                        await ConfiguracoesService.upsert(configs[i], {
+                            id_usr,
+                            type: {
+                                [Op.like]: [configs[i].type]
+                            }
+                        })
+                    }
+                }
+
+
+            }
 
             // Supondo que haja uma conta associada ao usuário
             //const account = await AccountService.getAccountByOwnerId(UsuarioModel.id);

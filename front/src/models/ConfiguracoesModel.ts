@@ -15,6 +15,12 @@ class ConfiguracoesModel extends Model<ConfiguracoesModel> {
     id_conf!: number;
 
     @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    id_usr!: number;
+
+    @Column({
         type: DataType.STRING,
         allowNull: false,
         defaultValue: 'APP' //OPÇÕES: APP/UPDATES

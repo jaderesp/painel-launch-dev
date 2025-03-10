@@ -34,7 +34,7 @@ class ConfiguracoesService {
             const updated = await ConfiguracoesModel.update(params, { where });
             return updated;
         } catch (error) {
-            console.log("Erro ao criar ou atualizar usuário: ", error);
+            console.log("Erro ao criar ou atualizar os dados: ", error);
             await ConfiguracoesModel.sync();
             return false;
         }
@@ -75,7 +75,7 @@ class ConfiguracoesService {
             return Conta;
         } catch (error) {
             console.log("Erro ao buscar usuário: ", error);
-            return false;
+            return [];
         }
     }
 

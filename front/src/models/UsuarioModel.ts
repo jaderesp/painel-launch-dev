@@ -65,6 +65,12 @@ class UsuarioModel extends Model<UsuarioModel> {
     })
     status!: string;
 
+    @Column({
+        type: DataType.STRING(1200),
+        allowNull: true,
+    })
+    token!: string;
+
     @CreatedAt
     declare createdAt: Date;
 

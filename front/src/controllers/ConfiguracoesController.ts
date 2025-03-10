@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import ConfiguracoesService from '../services/ConfiguracoesService';
+import UsuarioService from '../services/UsuarioService';
 import formidable, { IncomingForm } from "formidable";
 import path from "path";
 import fs from "fs-extra";
+import { getUserSession } from '../controllers/utils/Session';
 
 class ConfiguracoesController {
     // Criar uma nova config
@@ -48,8 +50,20 @@ class ConfiguracoesController {
 
     // Obter todas as configs
     public async getAll(req: Request, res: Response): Promise<Response> {
+
+        let user = getUserSession(req);
+
         try {
-            const configs = await ConfiguracoesService.getAll();
+
+            //retornar somente dados refrente ao usuario logado
+            let where = req.body
+
+            if (!where) {
+                let { id_usr } = user ? ('id_usr' in user ? user : {}) : {};
+                where = { id_usr }
+            }
+
+            const configs = await ConfiguracoesService.get(where);
             return res.status(200).json(configs);
         } catch (error) {
             return res.status(500).json({ message: 'Erro ao buscar configs', error });
@@ -191,8 +205,30 @@ class ConfiguracoesController {
 
     //rotas de interfaces customizadas
     public customConfigData = async (req: Request, res: Response) => {
+
+        //filtrar o usuario pelo token fornecido
+        const token = req.header("Authorization")?.split(" ")[1]; // Bearer Token
+
+        if (!token) {
+            return res.status(200).json({ error: "Acesso negado, token não fornecido." });
+        }
+
+        //resgatar dados do usuario (token)
+        let usuario = await UsuarioService.getSomeOne({ token });
+
+        if (!usuario) {
+            return res.status(200).json({ error: "Acesso negado, usuario não encontrado referente ao tokens informado." })
+        }
+
         try {
-            const configuracoes = await ConfiguracoesService.getAll();
+
+            let { id_usr } = usuario
+
+            const configuracoes = await ConfiguracoesService.get({ where: { id_usr } });
+
+            if (!configuracoes) {
+                return res.status(200).json({ message: "Os dados de configurações não foram encontradas." })
+            }
 
 
             //converter os dados de img_logo, img_back e imb_banner de string para json
