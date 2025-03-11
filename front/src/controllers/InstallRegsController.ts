@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import InstallRegsService from '../services/InstallRegsService';
+import { getUserSession } from '../controllers/utils/Session';
 import formidable, { IncomingForm } from "formidable";
 import path from "path";
 import fs from "fs-extra";

@@ -4,7 +4,7 @@ import UsuarioService from '../services/UsuarioService';
 import formidable, { IncomingForm } from "formidable";
 import path from "path";
 import fs from "fs-extra";
-import { getUserSession } from '../controllers/utils/Session';
+import { getUserSession, getWhereUser } from '../controllers/utils/Session';
 
 class ConfiguracoesController {
     // Criar uma nova config
@@ -33,8 +33,28 @@ class ConfiguracoesController {
                 where = { id_conf: null };
             }
 
+            //adicionar id do usuario a quem pertence as configurações
+
+            //==== INICIO da identificação para requisição de dados ====
+            let identData = await getWhereUser(req);
+
+            if (identData) {
+
+                let { isAdmin } = identData;
+
+                if (!isAdmin) {
+                    if (Object.keys(identData?.where).length > 0) {
+                        where = { where, ...identData?.where }//adicionar id_usr a requisição dos dados
+                    }
+                }
+
+            } else {
+                return res.status(200).json({ message: 'Acesso aos dados não permitido, não foi possível identificar o usuario requisitante.' });
+            }
+            //==== fim da identificação para requisição de dados ====
+
             if (!params) {
-                return res.status(400).json({ message: 'parametros não informados.' });
+                return res.status(200).json({ message: 'parametros não informados.' });
             }
 
             const retorno = await ConfiguracoesService.upsert(params, where);
@@ -51,19 +71,14 @@ class ConfiguracoesController {
     // Obter todas as configs
     public async getAll(req: Request, res: Response): Promise<Response> {
 
-        let user = getUserSession(req);
+        let userIdent = await getWhereUser(req);
+        let params = req.body
+        const { id_conf } = params;
 
         try {
 
             //retornar somente dados refrente ao usuario logado
-            let where = req.body
-
-            if (Object.keys(where).length == 0) {
-                let { id_usr } = user ? ('id_usr' in user ? user : { id_usr: null }) : { id_usr: null };
-                where = { id_usr }
-            } else {
-                return res.status(200).json({ messege: "Nenhum dado de configurações foi encontrado." })
-            }
+            let where = { id_conf, ...userIdent };
 
             const configs = await ConfiguracoesService.get(where);
             return res.status(200).json(configs);
@@ -74,10 +89,18 @@ class ConfiguracoesController {
 
     // Buscar um contato por ID
     static async getOne(req: Request, res: Response) {
-        const { id_conf } = req.body;
+
+        let userIdent = await getWhereUser(req, res);
+
+        let params = req.body
+        const { id_conf } = params;
 
         try {
-            const contato = await ConfiguracoesService.getSomeOne({ id_conf });
+
+            let where = { id_conf, ...userIdent };
+
+            const contato = await ConfiguracoesService.getSomeOne(where);
+
             if (!contato) {
                 return res.status(404).json({ message: 'Contato não encontrado.' });
             }
@@ -105,6 +128,7 @@ class ConfiguracoesController {
 
     // Atualizar uma config
     public async update(req: Request, res: Response): Promise<Response> {
+
         try {
 
             const { params } = req.body;
@@ -208,25 +232,12 @@ class ConfiguracoesController {
     //rotas de interfaces customizadas
     public customConfigData = async (req: Request, res: Response) => {
 
-        //filtrar o usuario pelo token fornecido
-        const token = req.header("Authorization")?.split(" ")[1]; // Bearer Token
-
-        if (!token) {
-            return res.status(200).json({ error: "Acesso negado, token não fornecido." });
-        }
-
-        //resgatar dados do usuario (token)
-        let usuario = await UsuarioService.getSomeOne({ token });
-
-        if (!usuario) {
-            return res.status(200).json({ error: "Acesso negado, usuario não encontrado referente ao tokens informado." })
-        }
+        //verificar autorização e parametrizar o usuario que esta solicitando operação
+        let where = await getWhereUser(req, res)
 
         try {
 
-            let { id_usr } = usuario
-
-            const configuracoes = await ConfiguracoesService.get({ where: { id_usr } });
+            const configuracoes = await ConfiguracoesService.get({ where: where });
 
             if (!configuracoes) {
                 return res.status(200).json({ message: "Os dados de configurações não foram encontradas." })

@@ -16,6 +16,12 @@ class InstallRegsModel extends Model<InstallRegsModel> {
     id_inst!: number;
 
     @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    id_usr!: number;
+
+    @Column({
         type: DataType.STRING(600),
         allowNull: true,
     })

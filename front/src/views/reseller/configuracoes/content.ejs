@@ -32,7 +32,7 @@
         <div class="card-body">
 
           <!-- token de acesso a api  dados do cliente -->
-          <div class="row">
+          <!--<div class="row">
 
             <div class="col-12 text-center">
               <h3>Acesso à API</h3>
@@ -45,9 +45,9 @@
                 required>
             </div>
 
-          </div>
+          </div> 
 
-          <hr>
+          <hr> -->
 
           <div class="row">
             <div class="col" id="loader">
@@ -62,7 +62,7 @@
 
                 <div class="row">
 
-                  <div class="col-12 text-center">
+                  <div class="col-12 text-center" ng-if="frmConf.type !== 'MIDIA'">
                     <h3 ng-bind="frmConf.titulo"></h3>
                     <p>Atualizar dados de {{frmConf.type}}.</p>
                   </div>

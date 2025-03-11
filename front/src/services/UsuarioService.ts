@@ -340,7 +340,7 @@ class UsuarioService {
             return usuario?.toJSON() || false;
         } catch (error) {
             console.log("Erro ao buscar usuário: ", error);
-            return false;
+            return {};
         }
     }
 
