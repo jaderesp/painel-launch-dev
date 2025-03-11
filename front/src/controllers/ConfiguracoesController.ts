@@ -65,7 +65,11 @@ class ConfiguracoesController {
         try {
 
             //retornar somente dados refrente ao usuario logado
-            let where = { id_conf, ...userWhere };
+            let where = { ...userWhere };
+
+            if (id_conf) {
+                where = { id_conf, ...where }
+            }
 
             const configs = await ConfiguracoesService.get(where);
             return res.status(200).json(configs);
@@ -224,7 +228,7 @@ class ConfiguracoesController {
 
         try {
 
-            const configuracoes = await ConfiguracoesService.get({ where: where });
+            const configuracoes = await ConfiguracoesService.get(where);
 
             if (!configuracoes) {
                 return res.status(200).json({ message: "Os dados de configurações não foram encontradas." })
@@ -293,27 +297,54 @@ class ConfiguracoesController {
             });
 
 
+            let data = {}
             //percorrer os dados de img_logo, img_back e imb_banner converter dados para string e concaterná-las separando por vírgula.
+            for (var i = 0; i < configuracoes.length; i++) {
+
+                switch (configuracoes[i].type) {
+                    case 'APP':
+                        let app = {
+                            "name": configuracoes[i].titulo,
+                            "img_app": configuracoes[i].img_app,
+                            "pacote_app": configuracoes[i].pacote,
+                            "version_app": configuracoes[i].versao,
+                            "descricao_app": configuracoes[i].descricao,
+                            "url_app": configuracoes[i].url_apk
+                        }
+
+                        data = { ...data, ...app }
+                        break;
+                    case 'UPDATE':
+
+                        let upd = {
+                            "versionupdate": configuracoes[i].versao,
+                            "descricaoupdate": configuracoes[i].descricao,
+                            "urlupdate": configuracoes[i].url_apk,
+                        }
+
+                        data = { ...data, ...upd }
+
+                        break
+                    case 'MIDIA':
+
+                        let midia = {
+                            "logo": configuracoes[i].img_logo,
+                            "back": configuracoes[i].img_back,
+                            "video": configuracoes[i].img_banner
+                        }
+
+                        data = { ...data, ...midia }
+
+                        break;
+                    default:
+                        break;
 
 
-            const responseData = configuracoes.map((config) => ({
+                }
+            }
 
-                logo: config.img_logo, //converter string para json
-                back: config.img_back,
-                video: config.img_banner,
-                pacote: config.pacote,
-                versionupdate: config.versao,
-                descricaoupdate: config.descricao,
-                urlupdate: config.url_apk,
-                img_app: config.img_app,
-                name_app: config.titulo,
-                pacote_app: config.pacote,
-                version_app: config.versao,
-                descricao_app: config.descricao,
-                url_app: config.url_apk,
-            }));
+            res.json({ code: 0, msg: 'success', data });
 
-            res.json({ code: 0, msg: 'success', data: responseData });
         } catch (error) {
             res.status(500).json({ code: 1, msg: 'Erro ao buscar os dados', error });
         }

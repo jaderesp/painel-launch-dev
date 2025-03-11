@@ -141,7 +141,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
                             item['img_logo'] = JSON.stringify($scope.frmDinamico['img_logo'])
                         } else { //converter para json
 
-                            $scope.frmDinamico['img_logo'] = JSON.parse(angular.toJson($scope.frmDinamico['img_logo']))
+                            $scope.frmDinamico['img_logo'] = JSON.parse(item['img_logo'])
 
                         }
                     }
@@ -155,7 +155,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
                             item['img_back'] = JSON.stringify($scope.frmDinamico['img_back'])
                         } else { //converter para json
 
-                            $scope.frmDinamico['img_back'] = JSON.parse(angular.toJson($scope.frmDinamico['img_back']))
+                            $scope.frmDinamico['img_back'] = JSON.parse(item['img_back'])
 
                         }
                     }
@@ -169,7 +169,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
                             item['img_banner'] = JSON.stringify($scope.frmDinamico['img_banner'])
                         } else { //converter para json
 
-                            $scope.frmDinamico['img_banner'] = JSON.parse(angular.toJson($scope.frmDinamico['img_banner']))
+                            $scope.frmDinamico['img_banner'] = JSON.parse(item['img_banner'])
 
                         }
 

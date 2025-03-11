@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import InstallRegsService from '../services/InstallRegsService';
-import { getUserSession } from '../controllers/utils/Session';
+import { getUserSession, getWhereUser } from '../controllers/utils/Session';
 import formidable, { IncomingForm } from "formidable";
 import path from "path";
 import fs from "fs-extra";
@@ -9,7 +9,12 @@ class InstallRegsController {
     // Criar uma nova data
     public async create(req: Request, res: Response): Promise<Response> {
         try {
-            const params = req.body;
+            let params = req.body;
+
+            let userWhere = await getWhereUser(req, res);
+
+            params = { ...params, ...userWhere }//add id_usr relacional ao registro
+
             const data = await InstallRegsService.add(params);
             if (!data) {
                 return res.status(400).json({ message: 'Erro ao criar data.' });
@@ -23,7 +28,7 @@ class InstallRegsController {
     public async createOrUpdate(req: Request, res: Response): Promise<Response> {
         try {
             const { id_inst, mac } = req.body;
-            const params = req.body;
+            let params = req.body;
             let where;
 
             if (id_inst) {
@@ -38,7 +43,13 @@ class InstallRegsController {
                 return res.status(400).json({ message: 'parametros não informados.' });
             }
 
+            let userWhere = await getWhereUser(req, res);
+
+            where = { ...where, ...userWhere };
+            params = { ...params, ...userWhere }//add id_usr relacional ao registro
+
             const retorno = await InstallRegsService.upsert(params, where);
+
             if (!retorno) {
                 return res.status(400).json({ message: 'Erro ao cadastrar.' });
             }
@@ -51,7 +62,11 @@ class InstallRegsController {
     // Obter todas as datas
     public async getAll(req: Request, res: Response): Promise<Response> {
         try {
-            const datas = await InstallRegsService.getAll();
+
+            //somente registro referente ao usuario autorizado
+            let where = await getWhereUser(req, res);
+
+            const datas = await InstallRegsService.get(where);
             return res.status(200).json(datas);
         } catch (error) {
             return res.status(500).json({ message: 'Erro ao buscar datas', error });
@@ -60,7 +75,12 @@ class InstallRegsController {
 
     public async get(req: Request, res: Response): Promise<Response> {
         try {
-            const where = req.params;
+
+            //somente registro referente ao usuario autorizado
+            let userWhere = await getWhereUser(req, res);
+
+            let where = req.params;
+            where = { ...where, ...userWhere };
 
             if (!where) {
                 return res.status(200).json({ message: 'Parametros para pesquisa não foram informados.' });
@@ -87,8 +107,12 @@ class InstallRegsController {
     // Obter uma data por ID
     public async getById(req: Request, res: Response): Promise<Response> {
         try {
+
+            let userWhere = await getWhereUser(req, res);
+
             const { id } = req.params;
-            const data = await InstallRegsService.getSomeOne({ id_data: id });
+            let where = { id_data: id, ...userWhere };
+            const data = await InstallRegsService.getSomeOne(where);
             if (!data) {
                 return res.status(404).json({ message: 'Conta não encontrada.' });
             }
@@ -100,8 +124,13 @@ class InstallRegsController {
 
     //criar função para verificar se categoria existe
     public async ifExist(req: Request, res: Response): Promise<Response> {
+
         try {
-            const where = req.body;
+
+            let userWhere = await getWhereUser(req, res);
+            let where = req.body;
+            where = { ...where, ...userWhere };
+
             const categoria = await InstallRegsService.getSomeOne(where);
             if (categoria) {
                 return res.status(200).json({ exist: true, message: 'Já existe um usuário com esse email ou telefone.' });
@@ -118,9 +147,13 @@ class InstallRegsController {
     // Atualizar uma data
     public async update(req: Request, res: Response): Promise<Response> {
         try {
+
+            let userWhere = await getWhereUser(req, res);
             const { id } = req.params;
             const params = req.body;
-            const data = await InstallRegsService.update(params, { id_data: id });
+            let where = { id_data: id, ...userWhere };
+
+            const data = await InstallRegsService.update(params, where);
             if (!data) {
                 return res.status(404).json({ message: 'Conta não encontrada ou erro ao atualizar.' });
             }
