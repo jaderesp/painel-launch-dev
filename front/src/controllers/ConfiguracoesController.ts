@@ -36,22 +36,9 @@ class ConfiguracoesController {
             //adicionar id do usuario a quem pertence as configurações
 
             //==== INICIO da identificação para requisição de dados ====
-            let identData = await getWhereUser(req);
+            let userWhere = await getWhereUser(req, res);
 
-            if (identData) {
-
-                let { isAdmin } = identData;
-
-                if (!isAdmin) {
-                    if (Object.keys(identData?.where).length > 0) {
-                        where = { where, ...identData?.where }//adicionar id_usr a requisição dos dados
-                    }
-                }
-
-            } else {
-                return res.status(200).json({ message: 'Acesso aos dados não permitido, não foi possível identificar o usuario requisitante.' });
-            }
-            //==== fim da identificação para requisição de dados ====
+            where = { id_conf, ...userWhere };
 
             if (!params) {
                 return res.status(200).json({ message: 'parametros não informados.' });
@@ -71,14 +58,14 @@ class ConfiguracoesController {
     // Obter todas as configs
     public async getAll(req: Request, res: Response): Promise<Response> {
 
-        let userIdent = await getWhereUser(req, res);
+        let userWhere = await getWhereUser(req, res);
         let params = req.body
         const { id_conf } = params;
 
         try {
 
             //retornar somente dados refrente ao usuario logado
-            let where = { id_conf, ...userIdent };
+            let where = { id_conf, ...userWhere };
 
             const configs = await ConfiguracoesService.get(where);
             return res.status(200).json(configs);
@@ -90,14 +77,14 @@ class ConfiguracoesController {
     // Buscar um contato por ID
     static async getOne(req: Request, res: Response) {
 
-        let userIdent = await getWhereUser(req, res);
+        let userWhere = await getWhereUser(req, res);
 
         let params = req.body
         const { id_conf } = params;
 
         try {
 
-            let where = { id_conf, ...userIdent };
+            let where = { id_conf, ...userWhere };
 
             const contato = await ConfiguracoesService.getSomeOne(where);
 

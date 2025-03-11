@@ -114,6 +114,7 @@ export const getWhereUser = async (req: Request, res: Response) => {
         if (!isAdmin) {
             if (Object.keys(identData?.where).length > 0) {
                 where = identData?.where //adicionar id_usr a requisição dos dados
+                return where
             } else {
                 return res.status(200).json({ message: 'Acesso aos dados não permitido, não foi possível identificar o usuario requisitante.' });
             }
