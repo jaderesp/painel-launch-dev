@@ -71,7 +71,7 @@ class ConfiguracoesController {
     // Obter todas as configs
     public async getAll(req: Request, res: Response): Promise<Response> {
 
-        let userIdent = await getWhereUser(req);
+        let userIdent = await getWhereUser(req, res);
         let params = req.body
         const { id_conf } = params;
 
