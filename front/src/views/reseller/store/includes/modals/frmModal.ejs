@@ -1,0 +1,50 @@
+<!-- Modal-->
+<div class="modal fade" id="frm_setup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-body social-profile text-start">
+                <div class="modal-toggle-wrapper">
+                    <h3>Dados do App</h3>
+                    <p>cadastro informações do app da loja.</p>
+
+                    <form ng-submit="acao('upsert',null)" class="row g-3">
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputTitulo">Título</label>
+                            <input ng-model="frmStore.titulo" class="form-control" id="inputTitulo" type="text"
+                                placeholder="Informe o título do app." required>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label" for="url_img">Url da Imagem</label>
+                            <input ng-model="frmStore.url_img" class="form-control" id="url_img" type="text"
+                                placeholder="Informe a url da imagem" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label" for="url_apk">Url do APK</label>
+                            <input ng-model="frmStore.url_apk" class="form-control" id="url_apk" type="url_apk"
+                                placeholder="Informe o Email" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label" for="inputobservacoes">Observações</label>
+                            <textarea ng-model="frmStore.anotacoes" class="form-control" id="inputobservacoes"
+                                placeholder="Informe as anotações aqui..."></textarea>
+                        </div>
+
+                        <!--<div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" id="gridCheck" type="checkbox">
+                                <label class="form-check-label d-block mb-0" for="gridCheck">Check me out</label>
+                            </div>
+                        </div> -->
+                        <div class="col-12">
+                            <button class="btn btn-success" type="submit">Salvar </button>
+                            <button class="btn btn-warning" type="button" data-bs-dismiss="modal">Fechar </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

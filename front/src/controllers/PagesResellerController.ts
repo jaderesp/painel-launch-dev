@@ -32,6 +32,13 @@ export const perfil = async (req: Request, res: Response) => {
 
 }
 
+export const store = async (req: Request, res: Response) => {
+
+    let session = req.session;
+    return res.render('reseller/store/index', { BASE_URL, session });
+
+}
+
 export const configuracoes = async (req: Request, res: Response) => {
 
     let session = req.session;
