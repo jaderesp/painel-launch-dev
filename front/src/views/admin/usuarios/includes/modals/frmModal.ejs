@@ -54,7 +54,7 @@
                                 <input ng-model="frmUsuario.password" class="form-control" id="inputPassword4"
                                     type="password" placeholder="Digite a senha" required>
                             </div>
-                            <div class="col-md-6" >
+                            <div class="col-md-6">
                                 <label class="form-label" for="inputConfirm">Confirmar Senha</label>
                                 <span class="label text-danger" ng-show="frmUsuario.password !== confirmPass">*Senhas
                                     não coencidem.</span>
@@ -63,6 +63,14 @@
                             </div>
                         </div>
 
+                        <div class="col-md-6" ng-if="frmUsuario.type_usuario === 'Reseller'">
+                            <label class="col-sm-3">Expiração </label>
+                            <div class="col-sm-9">
+                                <input ng-model="frmUsuario.data_expiracao" class="form-control digits"
+                                    id="expiracao-datetime-local-input" type="datetime-local"
+                                    value="{{frmUsuario.data_expiracao}}">
+                            </div>
+                        </div>
 
                         <!--<div class="col-12">
                             <div class="form-check">

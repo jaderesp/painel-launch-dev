@@ -13,7 +13,7 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
 
     $scope.opcoes = [
         { title: 'Admin', value: 'admin' },
-        { title: 'User', value: 'user' },
+        //{ title: 'User', value: 'user' },
         { title: 'Revendedor', value: 'Reseller' },
     ]
 
@@ -37,6 +37,11 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
                 break;
             case 'edit':
                 delete item.password
+                //tratar data
+                if (item.data_expiracao) {
+                    item.data_expiracao = item.data_expiracao ? moment(item.data_expiracao).format('YYYY-MM-DDThh:mm') : ''
+                    item.data_instalacao = item.data_instalacao ? moment(item.data_instalacao).format('YYYY-MM-DDThh:mm') : ''
+                }
                 angular.extend($scope.frmUsuario, item)
                 //abrir modal com os dados (form)
                 $("#frm_setup").modal('show')
