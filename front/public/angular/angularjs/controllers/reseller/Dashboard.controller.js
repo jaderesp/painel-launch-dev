@@ -2,22 +2,47 @@ jms_app.controller('DashboardController', ['$scope', '$window', '$http', '$timeo
 
     $scope.base_url = $("#baseUrl").val();
     $scope.api_url = $("#apiUrl").val();
+    $scope.token = $("#token").val();
     $scope.port = $("#port").val();
-    $scope.base = `${$scope.base_url}`
-
-    $scope.http = Utils
-    $scope.frmLogin = {}
+    $scope.base = $scope.base_url
     $scope.Popup = Popup.modal = $ngConfirm
+    $scope.utils = Utils
+    // $scope.fileSetup = FileSetup
+    $scope.isLoggedId = $("#session").val();
 
-
-    let confirm = await Popup.confirm('Atenção!', 'moda esta funcionando.', 'OK', 'green', '/usuarios/login');
-
-    if (confirm === false) {
-        $window.location.href = '/usuarios/login'
+    $scope.dashboard = {
+        "header": {
+            clients: 0,//clientes por revenda
+            expiresNow: 0,//clientes espirando hoje
+            expires: 0,
+            newClients: 0 //novas instalações(clientes app), porem não ativadas
+        }
     }
 
-    $scope.acao = async (item) => {
-        console.log(item)
+
+    $scope.initDashboardData = async () => {
+
+        await new Promise(async (resolve, reject) => {
+
+            let clients = await $scope.utils.post({}, `${$scope.base_url}/dashboard/totalClientsbyReseller`, $scope.token)
+            let expiresNow = await $scope.utils.post({}, `${$scope.base_url}/dashboard/clientsExpiresByReseller`, $scope.token)
+            let expires = await $scope.utils.post({}, `${$scope.base_url}/dashboard/totalExpiredClients`, $scope.token)
+
+            resolve({
+                clients: clients.qtde,
+                expiresNow: expiresNow.qtde,
+                expires: expires.qtde,
+            })
+
+        }).then(async (result) => {
+
+            $scope.dashboard.header = result
+
+        })
+
     }
+
+
+    $scope.initDashboardData()
 
 }])

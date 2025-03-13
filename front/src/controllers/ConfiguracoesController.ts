@@ -36,7 +36,7 @@ class ConfiguracoesController {
             //adicionar id do usuario a quem pertence as configurações
 
             //==== INICIO da identificação para requisição de dados ====
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             where = { id_conf, ...userWhere };
 
@@ -58,7 +58,7 @@ class ConfiguracoesController {
     // Obter todas as configs
     public async getAll(req: Request, res: Response): Promise<Response> {
 
-        let userWhere = await getWhereUser(req, res);
+        let userWhere = await getWhereUser(req, res, false);
         let params = req.body
         const { id_conf } = params;
 
@@ -81,7 +81,7 @@ class ConfiguracoesController {
     // Buscar um contato por ID
     static async getOne(req: Request, res: Response) {
 
-        let userWhere = await getWhereUser(req, res);
+        let userWhere = await getWhereUser(req, res, false);
 
         let params = req.body
         const { id_conf } = params;
@@ -224,7 +224,7 @@ class ConfiguracoesController {
     public customConfigData = async (req: Request, res: Response) => {
 
         //verificar autorização e parametrizar o usuario que esta solicitando operação
-        let where = await getWhereUser(req, res)
+        let where = await getWhereUser(req, res, false)
 
         try {
 

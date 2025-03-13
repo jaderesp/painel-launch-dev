@@ -24,10 +24,13 @@
                         <div class="col-md-12">
                             <label class="form-label" for="inputCategoria">Categoria</label>
 
-                            <select ng-model="frmGame.id_cat" class="form-select" id="inputCategoria"
-                                ng-options="opcao.id_cat as opcao.titulo for opcao in categoriasList track by opcao.titulo"
-                                required>
-                                <option selected="">Seleciona a Categoria</option>
+
+
+                            <select ng-model="frmGame.id_cat" class="form-select" id="inputTypeUser" required>
+                                <option selected="">Seleciona o Tipo de Usuário</option>
+                                <option ng-repeat="option in categoriasList" ng-value="option.id_cat">{{option.titulo}}
+                                </option>
+
                             </select>
                         </div>
 

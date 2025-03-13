@@ -13,7 +13,7 @@ class StoreController {
 
             let params = req.body;
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             params = { ...params, ...userWhere }//add id_usr relacional ao registro
 
@@ -43,7 +43,7 @@ class StoreController {
                 return res.status(400).json({ message: 'parametros não informados.' });
             }
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             where = { ...where, ...userWhere };
             params = { ...params, ...userWhere }//add id_usr relacional ao registro
@@ -62,7 +62,7 @@ class StoreController {
     public async getAll(req: Request, res: Response): Promise<Response> {
         try {
             //somente registro referente ao usuario autorizado
-            let where = await getWhereUser(req, res);
+            let where = await getWhereUser(req, res, false);
 
             const dadoss = await StoreService.get(where);
             return res.status(200).json(dadoss);
@@ -75,7 +75,7 @@ class StoreController {
     public async getById(req: Request, res: Response): Promise<Response> {
         try {
             //somente registro referente ao usuario autorizado
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             let where = req.params;
             where = { ...where, ...userWhere };
@@ -99,7 +99,7 @@ class StoreController {
     public async ifExist(req: Request, res: Response): Promise<Response> {
         try {
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
             let where = req.body;
             where = { ...where, ...userWhere };
 
@@ -120,7 +120,7 @@ class StoreController {
     public async update(req: Request, res: Response): Promise<Response> {
         try {
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
             const { id } = req.params;
             const params = req.body;
             let where = { id_data: id, ...userWhere };
@@ -231,7 +231,7 @@ class StoreController {
 
         try {
             //verificar autorização e parametrizar o usuario que esta solicitando operação
-            let where = await getWhereUser(req, res)
+            let where = await getWhereUser(req, res, false)
 
             if (!where) {
                 return res.status(200).json({ message: 'Informe os parametros para executar a operação.' });

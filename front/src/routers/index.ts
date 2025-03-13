@@ -9,6 +9,7 @@ import CategoriasRoute from './categoriasRoute';
 import GamesRoute from './gamesRoute';
 import InstallRegsRoute from './installRegsRoute';
 import StoreRoute from './StoreRoute'
+import DashboardRoute from './DashboardRoute';
 
 
 const router = Router();
@@ -27,6 +28,7 @@ router.use(usuarioRoutes); // Indexa as rotas de usuário
 router.use(contaRoutes);    // Indexa as rotas de conta
 router.use(configuracoesRoute);
 router.use(validateAccessToken)
+router.use(DashboardRoute);
 
 //api reseller
 router.use(InstallRegsRoute);

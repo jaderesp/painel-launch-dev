@@ -34,11 +34,12 @@
         <div class="row">
           <div class="col-xl-3 col-sm-6">
             <div class="card o-hidden small-widget">
-              <div class="card-body total-project border-b-primary border-2"><span class="f-light f-w-500 f-14">Total
-                  Project</span>
+              <div class="card-body total-project border-b-primary border-2">
+                <span class="f-light f-w-500 f-14">Clientes</span>
                 <div class="project-details">
                   <div class="project-counter">
-                    <h2 class="f-w-600">1,523</h2><span class="f-12 f-w-400">(This month)</span>
+                    <h2 class="f-w-600" ng-bind="dashboard.header.clients">0</h2>
+                    <span class="f-12 f-w-400">(This month)</span>
                   </div>
                   <div class="product-sub bg-primary-light">
                     <svg class="invoice-icon">
@@ -62,11 +63,12 @@
           </div>
           <div class="col-xl-3 col-sm-6">
             <div class="card o-hidden small-widget">
-              <div class="card-body total-Progress border-b-warning border-2"> <span class="f-light f-w-500 f-14">In
-                  Progress</span>
+              <div class="card-body total-Progress border-b-warning border-2"> <span
+                  class="f-light f-w-500 f-14">Expiram hoje</span>
                 <div class="project-details">
                   <div class="project-counter">
-                    <h2 class="f-w-600">836</h2><span class="f-12 f-w-400">(This month) </span>
+                    <h2 class="f-w-600" ng-bind="dashboard.header.expiresNow">0</h2><span class="f-12 f-w-400">(This
+                      month) </span>
                   </div>
                   <div class="product-sub bg-warning-light">
                     <svg class="invoice-icon">
@@ -91,10 +93,11 @@
           <div class="col-xl-3 col-sm-6">
             <div class="card o-hidden small-widget">
               <div class="card-body total-Complete border-b-secondary border-2"><span
-                  class="f-light f-w-500 f-14">Complete</span>
+                  class="f-light f-w-500 f-14">Expirados</span>
                 <div class="project-details">
                   <div class="project-counter">
-                    <h2 class="f-w-600">475</h2><span class="f-12 f-w-400">(This month) </span>
+                    <h2 class="f-w-600" ng-bind="dashboard.header.expires">0</h2><span class="f-12 f-w-400">(This month)
+                    </span>
                   </div>
                   <div class="product-sub bg-secondary-light">
                     <svg class="invoice-icon">
@@ -118,10 +121,11 @@
           </div>
           <div class="col-xl-3 col-sm-6">
             <div class="card o-hidden small-widget">
-              <div class="card-body total-upcoming"><span class="f-light f-w-500 f-14">Upcoming</span>
+              <div class="card-body total-upcoming"><span class="f-light f-w-500 f-14">Instalados (inativos)</span>
                 <div class="project-details">
                   <div class="project-counter">
-                    <h2 class="f-w-600">189</h2><span class="f-12 f-w-400">(This month) </span>
+                    <h2 class="f-w-600" ng-bind="dashboard.header.newClients">0</h2><span
+                      class="f-12 f-w-400">(This month) </span>
                   </div>
                   <div class="product-sub bg-light-light">
                     <svg class="invoice-icon">

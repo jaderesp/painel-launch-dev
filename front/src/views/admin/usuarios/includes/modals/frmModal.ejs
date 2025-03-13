@@ -13,10 +13,11 @@
                         <div class="col-md-12">
                             <label class="form-label" for="inputTypeUser">Tipo</label>
 
-                            <select ng-model="frmUsuario.type_usuario" class="form-select" id="inputTypeUser"
-                                ng-options="opcao.value as opcao.title for opcao in opcoes track by opcao.title"
-                                required>
+
+                            <select ng-model="frmUsuario.type_usuario" class="form-select" id="inputTypeUser" required>
                                 <option selected="">Seleciona o Tipo de Usuário</option>
+                                <option ng-repeat="option in opcoes" ng-value="option.value">{{option.title}}</option>
+
                             </select>
                         </div>
                         <div class="col-md-8">

@@ -5,7 +5,7 @@ jms_app.controller('DashboardController', ['$scope', '$window', '$http', '$timeo
     $scope.port = $("#port").val();
     $scope.base = `${$scope.base_url}`
 
-    $scope.http = Utils
+    $scope.utils = Utils
     $scope.frmLogin = {}
     $scope.Popup = Popup.modal = $ngConfirm
 

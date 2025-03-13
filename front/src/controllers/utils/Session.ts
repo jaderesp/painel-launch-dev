@@ -37,7 +37,7 @@ export const getUserSession = (req: Request): UserSession | null => {
 };
 
 //retornar op where condicional para consultar dados referente ao usuario (reseller) logado, se for admin liberar acesso a todos os dados
-export const identUser = async (req: Request): Promise<any> => {
+export const identUser = async (req: Request, limitedForAdmin: Boolean): Promise<any> => {
 
     let user = getUserSession(req);
 
@@ -76,8 +76,12 @@ export const identUser = async (req: Request): Promise<any> => {
 
                 id_usr = (id_usr) ? id_usr : (('id_usr' in usuario) ? usuario.id_usr : 0) as any;
 
-                if (!id_usr && type_usuario === 'Reseller') {
-                    return null
+                //limitedForAdmin=true, requisição valida somente para usuarios admin
+                if (!id_usr && type_usuario === 'Reseller') { //se o usuario for resellser e a opeção for de administrador não permitir acessar os dados
+
+                    if (limitedForAdmin === true) { //se a requisicao for para admins não retornar os dados
+                        return null
+                    }
                 }
 
                 return {
@@ -100,12 +104,12 @@ export const identUser = async (req: Request): Promise<any> => {
     }
 }
 
-export const getWhereUser = async (req: Request, res: Response) => {
+export const getWhereUser = async (req: Request, res: Response, limitedForAdmin: Boolean) => {
 
     let where = {}
 
     //==== INICIO da identificação para requisição de dados ====
-    let identData = await identUser(req);
+    let identData = await identUser(req, limitedForAdmin);
 
     if (identData) {
 

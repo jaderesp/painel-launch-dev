@@ -11,7 +11,7 @@ class InstallRegsController {
         try {
             let params = req.body;
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             params = { ...params, ...userWhere }//add id_usr relacional ao registro
 
@@ -43,7 +43,7 @@ class InstallRegsController {
                 return res.status(400).json({ message: 'parametros não informados.' });
             }
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             where = { ...where, ...userWhere };
             params = { ...params, ...userWhere }//add id_usr relacional ao registro
@@ -64,7 +64,7 @@ class InstallRegsController {
         try {
 
             //somente registro referente ao usuario autorizado
-            let where = await getWhereUser(req, res);
+            let where = await getWhereUser(req, res, false);
 
             const datas = await InstallRegsService.get(where);
             return res.status(200).json(datas);
@@ -77,7 +77,7 @@ class InstallRegsController {
         try {
 
             //somente registro referente ao usuario autorizado
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             let where = req.params;
             where = { ...where, ...userWhere };
@@ -108,7 +108,7 @@ class InstallRegsController {
     public async getById(req: Request, res: Response): Promise<Response> {
         try {
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
 
             const { id } = req.params;
             let where = { id_data: id, ...userWhere };
@@ -127,7 +127,7 @@ class InstallRegsController {
 
         try {
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
             let where = req.body;
             where = { ...where, ...userWhere };
 
@@ -148,7 +148,7 @@ class InstallRegsController {
     public async update(req: Request, res: Response): Promise<Response> {
         try {
 
-            let userWhere = await getWhereUser(req, res);
+            let userWhere = await getWhereUser(req, res, false);
             const { id } = req.params;
             const params = req.body;
             let where = { id_data: id, ...userWhere };

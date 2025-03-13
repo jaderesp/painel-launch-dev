@@ -30,10 +30,11 @@
                         <div class="col-md-4">
                             <label class="form-label" for="inputStatus">Status</label>
 
-                            <select ng-model="frmInstall.status" class="form-select" id="inputStatus"
-                                ng-options="opcao.value as opcao.titulo for opcao in opcoes track by opcao.titulo"
-                                required>
+
+                            <select ng-model="frmInstall.status" class="form-select" id="inputStatus" required>
                                 <option selected="">Seleciona o Status</option>
+                                <option ng-repeat="option in opcoes" ng-value="option.value">{{option.titulo}}</option>
+
                             </select>
                         </div>
 
