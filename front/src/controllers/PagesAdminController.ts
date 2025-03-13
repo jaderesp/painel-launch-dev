@@ -52,6 +52,13 @@ export const login = async (req: Request, res: Response) => {
 
 }
 
+export const perfil = async (req: Request, res: Response) => {
+
+    let session = req.session;
+    return res.render('admin/perfil/index', { BASE_URL, session });
+
+}
+
 export const usuarios = async (req: Request, res: Response) => {
     //passar paramentros para a pagina de login
     let session = req.session;

@@ -58,6 +58,18 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
                 await $scope.list()
                 $("#frm_setup").modal('hide')
                 break;
+            case 'update':
+                let retorno = await $scope.http.post($scope.frmUsuario, `${$scope.base_url}/usuario/update`, $scope.token)
+
+                if (retorno) {
+                    await Popup.confirm('Successo!', 'OS dados foram salvos.', 'OK', 'green');
+                } else {
+                    await Popup.confirm('Atenção!', 'Desculpe, Ocorreu um erro realizar a operação.', 'Entendido', 'red');
+                }
+
+                await $scope.getSomeOne()
+                $("#frm_setup").modal('hide')
+                break;
             case 'delete':
                 let confirm = await Popup.confirm('Atenção!', 'Deseja realmente excluir este usuário e todos os dados relacionados ao mesmo?', 'Confirmar', 'red');
                 if (confirm) {

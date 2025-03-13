@@ -1,0 +1,126 @@
+<!-- Page Sidebar Ends-->
+<div class="page-body" ng-controller="UsuarioController">
+  <div class="container-fluid">
+    <div class="page-title">
+      <div class="row">
+        <div class="col-6">
+          <h4>Meu Perfil</h4>
+        </div>
+        <div class="col-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">
+                <svg class="stroke-icon">
+                  <use href="../assets/svg/icon-sprite.svg#stroke-home"></use>
+                </svg></a></li>
+            <li class="breadcrumb-item">Data Tables</li>
+            <li class="breadcrumb-item active">Advance Init</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Container-fluid starts                   -->
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="card">
+        <div class="card-body">
+          <!-- Stock result -->
+          <h3>Meus Dados</h3>
+          <p>Atualizar dados do revendedor.</p>
+
+          <form ng-submit="acao('update',null)" class="row g-3">
+
+            <div class="col-md-12">
+              <label class="form-label" for="inputTypeUser">Tipo</label>
+
+              <select ng-model="frmUsuario.type_usuario" class="form-select" id="inputTypeUser" required>
+                <option selected="">Seleciona o Tipo de Usuário</option>
+                <option ng-repeat="option in opcoes" ng-value="option.value">{{option.title}}</option>
+
+              </select>
+            </div>
+            <div class="col-md-8">
+              <label class="form-label" for="inputNome">Nome</label>
+              <input ng-model="frmUsuario.nome" class="form-control" id="inputNome" type="text"
+                placeholder="Informe o nome" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="telefone">Telefone</label>
+              <span id="msg_telefone"></span>
+              <input ng-model="frmUsuario.telefone" ng-blur="verifyExist('telefone','msg_telefone')"
+                class="form-control" id="telefone" type="text" placeholder="Informe o Email" required>
+            </div>
+            <div class="col-md-12">
+              <label class="form-label" for="email">Email</label>
+              <span id="msg_email"></span>
+              <input ng-model="frmUsuario.email" ng-blur="verifyExist('email','msg_email')" class="form-control"
+                id="email" type="email" placeholder="Informe o Email" required>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-check">
+                <input ng-model="genSenha" ng-checked="!frmUsuario.id_usr" ng-true-value="true" ng-false-value="false"
+                  class="form-check-input" id="genSenha" type="checkbox">
+                <label class="form-check-label d-block mb-0" for="genSenha">Criar
+                  Senha</label>
+              </div>
+            </div>
+            <!-- confirmar senha -->
+            <div class="row" ng-if="genSenha || !frmUsuario.id_usr">
+
+              <div class=" col-md-6">
+                <label class="form-label" for="inputPassword4">Senha</label>
+
+                <input ng-model="frmUsuario.password" class="form-control" id="inputPassword4" type="password"
+                  placeholder="Digite a senha" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="inputConfirm">Confirmar Senha</label>
+                <span class="label text-danger" ng-show="frmUsuario.password !== confirmPass">*Senhas
+                  não coencidem.</span>
+                <input ng-model="confirmPass" class="form-control" id="inputConfirm" type="password"
+                  placeholder="Confirmar senha" required>
+              </div>
+            </div>
+
+
+            <!--<div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" id="gridCheck" type="checkbox">
+                                <label class="form-check-label d-block mb-0" for="gridCheck">Check me out</label>
+                            </div>
+                        </div> -->
+            <div class="col-12">
+              <button class="btn btn-success col-12" type="submit">Salvar </button>
+            </div>
+          </form>
+
+          <hr>
+          <!-- token de acesso a api  dados do cliente -->
+          <div class="row">
+
+            <div class="col-12 text-center">
+              <h3>Acesso à API</h3>
+              <p>Tokens de acesso de dados via api.</p>
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label" for="inputtoken">Token de acesso a api:
+
+                <a href="https://documenter.getpostman.com/view/8125887/2sAYk8uNRW" target="_blank">Documentação da
+                  api.</a>
+
+              </label>
+              <input ng-model="frmUsuario.token" class="form-control" id="inputtoken" readonly type="text">
+            </div>
+
+          </div>
+
+          <hr>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Container-fluid Ends-->
