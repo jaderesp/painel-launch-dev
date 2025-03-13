@@ -17,6 +17,13 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
         { title: 'Revendedor', value: 'Reseller' },
     ]
 
+    $scope.opcoesStatus = [
+        { title: 'Ativo', value: 'ATIVO' },
+        //{ title: 'User', value: 'user' },
+        { title: 'Expirado', value: 'EXPIRADO' },
+        { title: 'Inativo', value: 'INATIVO' }
+    ]
+
 
     $scope.list = async () => {
 

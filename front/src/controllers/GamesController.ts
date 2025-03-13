@@ -3,6 +3,9 @@ import GamesService from '../services/GamesService';
 import formidable, { IncomingForm } from "formidable";
 import path from "path";
 import fs from "fs-extra";
+import dotenv from 'dotenv';
+dotenv.config();
+const { BASE_URL, PORT } = process.env;
 
 class GamesController {
     // Criar uma nova conta
@@ -45,13 +48,47 @@ class GamesController {
         }
     }
 
-    // Obter todas as contas
+    // Obter todas as dados
     public async getAll(req: Request, res: Response): Promise<Response> {
         try {
-            const contas = await GamesService.getAll();
-            return res.status(200).json(contas);
+            const dados = await GamesService.getAll();
+            return res.status(200).json(dados);
         } catch (error) {
-            return res.status(500).json({ message: 'Erro ao buscar contas', error });
+            return res.status(500).json({ message: 'Erro ao buscar dados', error });
+        }
+    }
+
+    public async getAllCustom(req: Request, res: Response): Promise<Response> {
+        try {
+            const dados: any = await GamesService.getAll();
+
+            for (var i = 0; i < dados.length; i++) {
+
+                if (dados[i]['urlRoom']) {
+                    let dir = dados[i]['urlRoom']
+                    dados[i]['urlRoom'] = (dir.indexOf('http') === -1) ? `${BASE_URL}${dir}` : dir
+                }
+
+                if (dados[i]['urlBanner']) {
+                    let dir = dados[i]['urlBanner']
+                    dados[i]['urlBanner'] = (dir.indexOf('http') === -1) ? `${BASE_URL}${dir}` : dir
+                }
+
+                if (dados[i]['urlStreamIcon']) {
+                    let dir = dados[i]['urlStreamIcon']
+                    dados[i]['urlStreamIcon'] = (dir.indexOf('http') === -1) ? `${BASE_URL}${dir}` : dir
+                }
+
+                if (dados[i]['videoIntoDir']) {
+                    let dir = dados[i]['videoIntoDir']
+                    dados[i]['videoIntoDir'] = (dir.indexOf('http') === -1) ? `${BASE_URL}${dir}` : dir
+                }
+
+            }
+
+            return res.status(200).json(dados);
+        } catch (error) {
+            return res.status(500).json({ message: 'Erro ao buscar dados', error });
         }
     }
 

@@ -27,7 +27,38 @@ class DashboardController {
 
             let { id_usr } = 'id_usr' in where ? where : { id_usr: 0 }
 
-            const qtde = await DashboardRegsService.getTotalClientsByReseller(id_usr);
+            let qtde = await DashboardRegsService.getTotalClientsByReseller(id_usr);
+
+            if (!qtde) {
+                qtde = 0
+            }
+
+            return res.status(200).json({ qtde });
+
+        } catch (error) {
+            return res.status(500).json({ message: 'Erro ao buscar dados', qtde: 0, error });
+        }
+    }
+
+    public async getTotalNewClientsByReseller(req: Request, res: Response): Promise<Response> {
+        try {
+
+            //somente registro referente ao usuario autorizado
+            let where = await getWhereUser(req, res, false);
+
+            if (!where) {
+                return res.status(200).json({
+                    message: 'Você não tem permissão para acess', qtde: 0
+                })
+            }
+
+            let { id_usr } = 'id_usr' in where ? where : { id_usr: 0 }
+
+            let qtde = await DashboardRegsService.getTotalNewClientsByReseller(id_usr);
+
+            if (!qtde) {
+                qtde = 0
+            }
 
             return res.status(200).json({ qtde });
 
@@ -52,7 +83,11 @@ class DashboardController {
 
             let { id_usr } = 'id_usr' in where ? where : { id_usr: 0 }
 
-            const qtde = await DashboardRegsService.getExpiringClientsByReseller(id_usr, date);
+            let qtde = await DashboardRegsService.getExpiringClientsByReseller(id_usr, date);
+
+            if (!qtde) {
+                qtde = 0
+            }
 
             return res.status(200).json({ qtde });
 
@@ -77,7 +112,11 @@ class DashboardController {
 
             let { id_usr } = 'id_usr' in where ? where : { id_usr: 0 }
 
-            const qtde = await DashboardRegsService.getExpiredClientsByReseller(id_usr);
+            let qtde = await DashboardRegsService.getExpiredClientsByReseller(id_usr);
+
+            if (!qtde) {
+                qtde = 0
+            }
 
             return res.status(200).json({ qtde });
 
@@ -94,7 +133,27 @@ class DashboardController {
     public async getTotalActiveResellers(req: Request, res: Response): Promise<Response> {
         try {
 
-            const qtde = await DashboardRegsService.getTotalActiveResellers();
+            let qtde = await DashboardRegsService.getTotalActiveResellers();
+
+            if (!qtde) {
+                qtde = 0
+            }
+
+            return res.status(200).json({ qtde });
+
+        } catch (error) {
+            return res.status(500).json({ message: 'Erro ao buscar dados', qtde: 0, error });
+        }
+    }
+
+    public async getTotalNewActiveClients(req: Request, res: Response): Promise<Response> {
+        try {
+
+            let qtde = await DashboardRegsService.getTotalActiveResellers();
+
+            if (!qtde) {
+                qtde = 0
+            }
 
             return res.status(200).json({ qtde });
 
@@ -107,7 +166,11 @@ class DashboardController {
 
         try {
 
-            const qtde = await DashboardRegsService.getTotalActiveClients();
+            let qtde = await DashboardRegsService.getTotalActiveClients();
+
+            if (!qtde) {
+                qtde = 0
+            }
 
             return res.status(200).json({ qtde });
 
@@ -120,7 +183,11 @@ class DashboardController {
 
         try {
 
-            const qtde = await DashboardRegsService.getExpiredResellersByPeriod();
+            let qtde = await DashboardRegsService.getExpiredResellersByPeriod();
+
+            if (!qtde) {
+                qtde = 0
+            }
 
             return res.status(200).json({ qtde });
 

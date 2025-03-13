@@ -58,7 +58,7 @@ jms_app.controller('SistemaController', ['$scope', '$window', '$http', '$timeout
     let exec = 0
     $interval(function () {
 
-        $scope.setupSession()
+        // $scope.setupSession()
 
         if (exec == 0) {
             time_ = 1000 * 60 * 1

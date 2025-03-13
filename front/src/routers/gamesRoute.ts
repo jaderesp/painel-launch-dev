@@ -15,4 +15,7 @@ router.post('/games/remove', authenticateToken, GamesController.delete);
 router.post('/games/upload', authenticateToken, upload.single('file'), GamesController.upload);
 router.post('/games/uploadXhr', authenticateToken, GamesController.uploadXhr);
 
+//rotas de acesso externo (livre de autenticação)
+router.get('/games/all', GamesController.getAllCustom);
+
 export default router;
