@@ -11,8 +11,63 @@ class Utils {
 
     }
 
+    async post($http, $scope, params, rota, token = null, loader = false) {
+        return new Promise(async (resolve, reject) => {
+            let header = {};
+
+            if (!rota) {
+                console.log("\r\n Informar a rota para chamada: ");
+                resolve(false);
+                return;
+            }
+
+            if (token) {
+                header = {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                };
+            }
+
+            if (params) {
+                loader ? this.loader('start', 'loader', 'data-loader') : null;
+                console.log("\r\n Parametros para o post: ", params);
+
+                try {
+
+
+
+                    const response = await $http.post(rota, params, header);
+                    const retorno = response.data;
+
+                    console.log(`\r\n Requisição POST realizada.`, retorno);
+                    this.loader('stop', 'loader', 'data-loader');
+
+
+                    resolve(retorno);
+
+
+                } catch (errors) {
+                    console.log("Ocorreu um erro ao tentar atualizar a intent: ", errors);
+                    loader ? this.loader('stop', 'loader', 'data-loader') : null;
+                    resolve(false);
+                    return;
+                }
+
+            } else {
+                console.log("\r\n Por favor informe parâmetros para requisição POST.");
+                resolve(false);
+            }
+        });
+    }
+
     /* add item no banco e retornar format html com id do banco nas funções */
-    async post(params, rota, token = null, loder = false) {
+    async postAx(params, rota, token = null, loder = false) {
+
+        /* 
+            possivel problema, pode ocorrer atraso na exibição dos dados no component, 
+            pois o motor do angularjs demora pra detectar as mudanças no doom
+        */
 
         return new Promise(async (resolve, reject) => {
 

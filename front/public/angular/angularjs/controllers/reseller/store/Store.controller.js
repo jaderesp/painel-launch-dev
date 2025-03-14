@@ -21,7 +21,9 @@ jms_app.controller('StoreController', ['$scope', '$window', '$http', '$timeout',
     $scope.list = async () => {
 
         $scope.storeList = []
-        $scope.storeList = await $scope.utils.post({}, `${$scope.base_url}/store/list`, $scope.token)
+        $scope.storeList = await $scope.utils.post($http, $scope, {}, `${$scope.base_url}/store/list`, $scope.token)
+
+        $.apply();
     }
 
 
@@ -34,16 +36,16 @@ jms_app.controller('StoreController', ['$scope', '$window', '$http', '$timeout',
                 //abrir modal com os dados (form)
                 $("#frm_setup").modal('show')
                 break;
-            case 'edit':               
+            case 'edit':
                 angular.extend($scope.frmStore, item)
                 //abrir modal com os dados (form)
                 $("#frm_setup").modal('show')
                 break;
             case 'upsert':
-                await $scope.utils.post($scope.frmStore, `${$scope.base_url}/store/setup`, $scope.token)
+                await $scope.utils.post($http, $scope, $scope.frmStore, `${$scope.base_url}/store/setup`, $scope.token)
                 await $scope.list()
                 $("#frm_setup").modal('hide')
-                break;            
+                break;
             default:
                 break;
         }

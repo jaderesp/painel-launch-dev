@@ -29,12 +29,17 @@ jms_app.controller('GamesController', ['$scope', '$window', '$http', '$timeout',
     switch (type) {
 
       case 'list_categories':
+        // 🚀 GARANTINDO ATUALIZAÇÃO RÁPIDA NA UI
+
+
         $scope.categoriasList = []
-        $scope.categoriasList = await $scope.utils.post({}, `${$scope.base_url}/${$scope.relRoute}/list`, $scope.token)
+        $scope.categoriasList = await $scope.utils.post($http, $scope, {}, `${$scope.base_url}/${$scope.relRoute}/list`, $scope.token)
+
         break;
       default:
         $scope.gamesList = []
-        $scope.gamesList = await $scope.utils.post({}, `${$scope.base_url}/${$scope.mainRoute}/list`, $scope.token)
+        $scope.gamesList = await $scope.utils.post($http, $scope, {}, `${$scope.base_url}/${$scope.mainRoute}/list`, $scope.token)
+        $.apply()
         break;
 
     }
@@ -59,7 +64,7 @@ jms_app.controller('GamesController', ['$scope', '$window', '$http', '$timeout',
         $("#frm_setup").modal('show')
         break;
       case 'upsert':
-        await $scope.utils.post($scope.frmGame, `${$scope.base_url}/${$scope.mainRoute}/setup`, $scope.token)
+        await $scope.utils.post($http, $scope.frmGame, `${$scope.base_url}/${$scope.mainRoute}/setup`, $scope.token)
         await $scope.list()
         $("#frm_setup").modal('hide')
         break;
@@ -67,7 +72,7 @@ jms_app.controller('GamesController', ['$scope', '$window', '$http', '$timeout',
 
         let confirm = await Popup.confirm('Atenção!', 'Deseja realmente excluir este usuário e todos os dados relacionados ao mesmo?', 'Confirmar', 'red');
         if (confirm) {
-          await $scope.utils.post(item, `${$scope.base_url}/${$scope.mainRoute}/remove`, $scope.token)
+          await $scope.utils.post($http, item, `${$scope.base_url}/${$scope.mainRoute}/remove`, $scope.token)
           await $scope.list()
         }
 
@@ -170,7 +175,7 @@ jms_app.controller('GamesController', ['$scope', '$window', '$http', '$timeout',
     let filter_ = { [indice_]: value }
 
     $(`#${elamentId}`).html('')
-    const response = await $scope.utils.post(filter_, `${$scope.base_url}/${$scope.mainRoute}/verifyExist`, $scope.token)
+    const response = await $scope.utils.post($http, filter_, `${$scope.base_url}/${$scope.mainRoute}/verifyExist`, $scope.token)
 
     if (response?.exist) {
 

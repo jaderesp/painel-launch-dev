@@ -21,7 +21,7 @@ jms_app.controller('SistemaController', ['$scope', '$window', '$http', '$timeout
 
         let route = logoff ? 'logoff' : 'verifySession'
 
-        let logged = await $scope.http.post({}, `${$scope.base}/${route}`, $scope.token)
+        let logged = await $scope.http.post($http, $scope, {}, `${$scope.base}/${route}`, $scope.token)
         console.log(logged)
 
         if (logged) {
@@ -58,7 +58,7 @@ jms_app.controller('SistemaController', ['$scope', '$window', '$http', '$timeout
     let exec = 0
     $interval(function () {
 
-        $scope.setupSession()
+        // $scope.setupSession()
 
         if (exec == 0) {
             time_ = 1000 * 60 * 1

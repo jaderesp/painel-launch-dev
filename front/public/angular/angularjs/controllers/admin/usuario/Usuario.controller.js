@@ -27,10 +27,14 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
 
     $scope.list = async () => {
 
-        $scope.usuariosList = []
+        $scope.$applyAsync(async () => {
 
-        $scope.usuariosList = await $scope.http.post({}, `${$scope.base_url}/usuarios/list`, $scope.token)
+            $scope.usuariosList = []
 
+            $scope.usuariosList = await $scope.http.post($http, $scope, {}, `${$scope.base_url}/usuarios/list`, $scope.token)
+
+        })
+        $.apply()
     }
 
     $scope.acao = async (action, item) => {
@@ -54,12 +58,12 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
                 $("#frm_setup").modal('show')
                 break;
             case 'upsert':
-                await $scope.http.post($scope.frmUsuario, `${$scope.base_url}/usuario/setup`, $scope.token)
+                await $scope.http.post($http, $scope, $scope.frmUsuario, `${$scope.base_url}/usuario/setup`, $scope.token)
                 await $scope.list()
                 $("#frm_setup").modal('hide')
                 break;
             case 'update':
-                let retorno = await $scope.http.post($scope.frmUsuario, `${$scope.base_url}/usuario/update`, $scope.token)
+                let retorno = await $scope.http.post($http, $scope, $scope.frmUsuario, `${$scope.base_url}/usuario/update`, $scope.token)
 
                 if (retorno) {
                     await Popup.confirm('Successo!', 'OS dados foram salvos.', 'OK', 'green');
@@ -73,7 +77,7 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
             case 'delete':
                 let confirm = await Popup.confirm('Atenção!', 'Deseja realmente excluir este usuário e todos os dados relacionados ao mesmo?', 'Confirmar', 'red');
                 if (confirm) {
-                    await $scope.http.post(item, `${$scope.base_url}/usuarios/remove`, $scope.token)
+                    await $scope.http.post($http, $scope, item, `${$scope.base_url}/usuarios/remove`, $scope.token)
                     await $scope.list()
                 }
 
@@ -91,7 +95,7 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
         let filter_ = { [indice_]: value }
 
         $(`#${elamentId}`).html('')
-        const response = await $scope.http.post(filter_, `${$scope.base_url}/usuario/verifyExist`, $scope.token)
+        const response = await $scope.http.post($http, $scope, filter_, `${$scope.base_url}/usuario/verifyExist`, $scope.token)
 
         if (response?.exist) {
 

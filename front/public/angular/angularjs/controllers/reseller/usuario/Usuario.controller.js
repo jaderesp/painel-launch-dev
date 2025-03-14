@@ -17,11 +17,17 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
 
     $scope.getSomeOne = async () => {
 
-        let id = $scope.isLoggedId
+        $scope.$applyAsync(async () => {
 
-        $scope.frmUsuario = []
-        $scope.frmUsuario = await $scope.http.post({ id }, `${$scope.base_url}/usuario/getById`, $scope.token)
-        $scope.frmUsuario.password = ''
+            let id = $scope.isLoggedId
+
+            $scope.frmUsuario = []
+            $scope.frmUsuario = await $scope.http.post($http, $scope, { id }, `${$scope.base_url}/usuario/getById`, $scope.token)
+            $scope.frmUsuario.password = ''
+
+        })
+
+        $.apply()
 
     }
 
@@ -42,7 +48,7 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
                 $("#frm_setup").modal('show')
                 break;
             case 'update':
-                let retorno = await $scope.http.post($scope.frmUsuario, `${$scope.base_url}/usuario/update`, $scope.token)
+                let retorno = await $scope.http.post($http, $scope, $scope.frmUsuario, `${$scope.base_url}/usuario/update`, $scope.token)
 
                 if (retorno) {
                     await Popup.confirm('Successo!', 'OS dados foram salvos.', 'OK', 'green');
@@ -66,7 +72,7 @@ jms_app.controller('UsuarioController', ['$scope', '$window', '$http', '$timeout
         let filter_ = { [indice_]: value }
 
         $(`#${elamentId}`).html('')
-        const response = await $scope.http.post(filter_, `${$scope.base_url}/usuario/verifyExist`, $scope.token)
+        const response = await $scope.http.post($http, $scope, filter_, `${$scope.base_url}/usuario/verifyExist`, $scope.token)
 
         if (response?.exist) {
 

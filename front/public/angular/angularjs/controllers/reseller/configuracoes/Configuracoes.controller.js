@@ -28,39 +28,44 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
 
     $scope.list = async () => {
 
-        //ativar loader
-        $scope.utils.loader('start', 'loader', 'loadertaget', 35)
-
-        $scope.configuracoesList = []
-
-        $scope.utils.post({}, `${$scope.base_url}/configuracoes/list`, $scope.token).then(async (data) => {
+        $scope.$applyAsync(async () => {
             //ativar loader
-            $scope.utils.loader('stop', 'loader', 'loadertaget')
+            $scope.utils.loader('start', 'loader', 'loadertaget', 35)
 
-            //converter dados de midias de string para JSon
-            let arr = data
-            //limpar o objcto
-            for (var i = 0; i < arr.length; i++) {
-                let item = {}
+            $scope.configuracoesList = []
 
-                //filtrar as configurações do tipo MIDIA
-                if (arr[i].type == 'MIDIA') {
+            $scope.utils.post($http, $scope, {}, `${$scope.base_url}/configuracoes/list`, $scope.token).then(async (data) => {
+                //ativar loader
+                $scope.utils.loader('stop', 'loader', 'loadertaget')
 
-                    let midiasObj = {}
-                    midiasObj = await $scope.parseer(arr[i], true) //string do json
+                //converter dados de midias de string para JSon
+                let arr = data
+                //limpar o objcto
+                for (var i = 0; i < arr.length; i++) {
+                    let item = {}
 
-                    if (midiasObj) {
-                        arr[i] = { ...midiasObj }
+                    //filtrar as configurações do tipo MIDIA
+                    if (arr[i].type == 'MIDIA') {
+
+                        let midiasObj = {}
+                        midiasObj = await $scope.parseer(arr[i], true) //string do json
+
+                        if (midiasObj) {
+                            arr[i] = { ...midiasObj }
+                        }
+
                     }
-
+                    // angular.extend(item, arr[i])
+                    // angular.extend(item, arr[i])
+                    // params.push(item)
                 }
-                // angular.extend(item, arr[i])
-                // angular.extend(item, arr[i])
-                // params.push(item)
-            }
 
-            $scope.configuracoesList = data
+                $scope.configuracoesList = data
+            })
+
         })
+
+        $scope.$apply()
 
 
     }
@@ -94,7 +99,7 @@ jms_app.controller('ConfiguracoesController', ['$scope', '$window', '$http', '$t
                     params.push(item)
                 }
 
-                let retorno = await $scope.utils.post({ params }, `${$scope.base_url}/configuracoes/update`, $scope.token)
+                let retorno = await $scope.utils.post($http, $scope, { params }, `${$scope.base_url}/configuracoes/update`, $scope.token)
 
                 if (retorno) {
                     await Popup.confirm('Successo!', 'OS dados de configurações foram salvos.', 'OK', 'green');

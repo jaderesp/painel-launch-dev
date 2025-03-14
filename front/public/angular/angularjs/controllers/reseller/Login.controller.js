@@ -11,7 +11,7 @@ jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout',
 
     $scope.login = async () => {
 
-        $scope.http.post($scope.frmLogin, `${$scope.base}/reseller/login`).then(async (retorno) => {
+        $scope.http.post($http, $scope, $scope.frmLogin, `${$scope.base}/reseller/login`).then(async (retorno) => {
 
             console.log("Retorno login:", retorno)
 
@@ -43,7 +43,7 @@ jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout',
     //verificar sessão se logado
     $scope.verifySession = async () => {
 
-        let logged = await $scope.http.post(`${$scope.base}/verifySession`)
+        let logged = await $scope.http.post($http, $scope, `${$scope.base}/verifySession`)
         console.log(logged)
 
         if (logged) {
@@ -66,7 +66,7 @@ jms_app.controller('LoginController', ['$scope', '$window', '$http', '$timeout',
 
     $scope.loggoff = async () => {
 
-        let logged = await $scope.http.post(`${$scope.base}/reseller/loggoff`)
+        let logged = await $scope.http.post($http, $scope, `${$scope.base}/reseller/loggoff`)
         console.log(logged)
 
 

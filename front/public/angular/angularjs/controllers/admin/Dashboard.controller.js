@@ -24,10 +24,10 @@ jms_app.controller('DashboardController', ['$scope', '$window', '$http', '$timeo
 
         await new Promise(async (resolve, reject) => {
 
-            let resellers = await $scope.utils.post({}, `${$scope.base_url}/dashboard/totalResellersActive`, $scope.token)
-            let totalClients = await $scope.utils.post({}, `${$scope.base_url}/dashboard/totalClients`, $scope.token)
-            let expiresResellers = await $scope.utils.post({}, `${$scope.base_url}/dashboard/totalExpiredResellers`, $scope.token)
-            let newClients = await $scope.utils.post({}, `${$scope.base_url}/dashboard/totalNewClients`, $scope.token)
+            let resellers = await $scope.utils.post($http, $scope, {}, `${$scope.base_url}/dashboard/totalResellersActive`, $scope.token)
+            let totalClients = await $scope.utils.post($http, $scope, {}, `${$scope.base_url}/dashboard/totalClients`, $scope.token)
+            let expiresResellers = await $scope.utils.post($http, $scope, {}, `${$scope.base_url}/dashboard/totalExpiredResellers`, $scope.token)
+            let newClients = await $scope.utils.post($http, $scope, {}, `${$scope.base_url}/dashboard/totalNewClients`, $scope.token)
 
             resolve({
                 resellers: resellers.qtde,
